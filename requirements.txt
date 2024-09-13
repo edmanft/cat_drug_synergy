@@ -1,0 +1,9 @@
+fastai
+dtreeviz
+fastbook
+pandas
+scikit-learn
+xgboost
+seaborn
+IPython
+auto-sklearn
