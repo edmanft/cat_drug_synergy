@@ -1,0 +1,246 @@
+SLURM_JOB_GROUP=spmth
+SLURM_MPI_TYPE=pmi2
+CONDA_SHLVL=1
+LS_COLORS=rs=0:di=38;5;33:ln=38;5;51:mh=00:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=01;05;37;41:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;40:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.zst=38;5;9:*.tzst=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.wim=38;5;9:*.swm=38;5;9:*.dwm=38;5;9:*.esd=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.mjpg=38;5;13:*.mjpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.m4a=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.oga=38;5;45:*.opus=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+LD_LIBRARY_PATH=/apps/exported/installed/libraries/pmix/3.2.2/lib:/usr/local/apps/slurm/latest/lib:/apps/exported/installed/libraries/pmix/3.2.2/lib:/usr/local/apps/slurm/latest/lib:
+CONDA_EXE=/apps/exported/installed/interpreters/anaconda3/2022.10/bin/conda
+SRUN_DEBUG=3
+SLURM_STEP_ID=0
+VASP_PP_PATH=/apps/exported/installed/software/vasp/PP/
+LC_MEASUREMENT=es_ES.UTF-8
+SLURM_NODEID=0
+SLURM_TASK_PID=222758
+SSH_CONNECTION=150.244.119.253 54860 150.244.198.142 22
+INCLUDE=/apps/exported/installed/interpreters/anaconda3/2022.10/include
+LC_PAPER=es_ES.UTF-8
+LC_MONETARY=es_ES.UTF-8
+C=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/C/POTCAR
+SLURM_PRIO_PROCESS=0
+H=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/H/POTCAR
+I=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/I/POTCAR
+SLURM_CPU_BIND_VERBOSE=quiet
+N=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/N/POTCAR
+O=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/O/POTCAR
+MODULES_RUN_QUARANTINE=LD_LIBRARY_PATH LD_PRELOAD
+LANG=en_US.UTF-8
+SLURM_SUBMIT_DIR=/home/mgonzalez
+HISTCONTROL=ignoredups
+HISTTIMEFORMAT=%s %F %T 
+PMI_SIZE=1
+HOSTNAME=rocinante-adm
+SLURM_CPUS_PER_TASK=8
+SLURM_STEPID=0
+SLURM_SRUN_COMM_HOST=10.1.1.254
+SLURM_DISTRIBUTION=cyclic
+PATH_modshare=/usr/bin:1:/home/mgonzalez/.fzf/bin:1:/usr/share/Modules/bin:1:/usr/local/bin:1:/usr/local/apps/slurm/latest/bin:1:/apps/exported/installed/interpreters/anaconda3/2022.10/bin:1:/home/mgonzalez/.local/bin:1:/apps/exported/installed/libraries/pmix/3.2.2/bin:1:/usr/local/apps/slurm/latest/sbin:1:/usr/local/go/bin:1:/usr/sbin:1:/home/mgonzalez/bin:1:/usr/local/sbin:1
+LOADEDMODULES_modshare=anaconda3/2023.3:1
+CONDA_PREFIX=/home/mgonzalez/.conda/envs/cat_drug_synergy
+SLURM_PROCID=0
+SLURM_JOB_GID=1008
+SLURM_CPU_BIND=quiet,mask_cpu:0x00000000000000FF
+SLURMD_NODENAME=node-02
+Cu=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Cu/POTCAR
+SLURM_JOB_END_TIME=1726253441
+Cl=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Cl/POTCAR
+SLURM_TASKS_PER_NODE=1
+S_COLORS=auto
+_CE_M=
+which_declare=declare -f
+LC_NAME=es_ES.UTF-8
+XDG_SESSION_ID=29000
+MODULES_CMD=/usr/share/Modules/libexec/modulecmd.tcl
+SLURM_NNODES=1
+USER=mgonzalez
+INCLUDE_modshare=/apps/exported/installed/interpreters/anaconda3/2022.10/include:1
+SLURM_LAUNCH_NODE_IPADDR=10.1.1.254
+SLURM_STEP_TASKS_PER_NODE=1
+SLURM_JOB_START_TIME=1726217441
+SLURM_NTASKS_PER_NODE=1
+SELINUX_ROLE_REQUESTED=
+PWD=/home/mgonzalez/CODE/cat_drug_synergy
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SLURM_JOB_NODELIST=node-02
+MODULES_LMCONFLICT_modshare=anaconda3/2023.3&anaconda2&anaconda3:1
+HOME=/home/mgonzalez
+PMI_FD=11
+SLURM_CLUSTER_NAME=rocinante
+CONDA_PYTHON_EXE=/apps/exported/installed/interpreters/anaconda3/2022.10/bin/python
+SLURM_NODELIST=node-02
+SSH_CLIENT=150.244.119.253 54860 22
+SLURM_NTASKS=1
+SLURM_UMASK=0022
+SELINUX_LEVEL_REQUESTED=
+SLURM_JOB_CPUS_PER_NODE=8
+XDG_DATA_DIRS=/home/mgonzalez/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+SLURM_TOPOLOGY_ADDR=node-02
+_LMFILES__modshare=/apps/exported/modules/interpreters/anaconda3/2023.3:1
+_CE_CONDA=
+SLURMD_DEBUG=2
+SLURM_WORKING_CLUSTER=(null):rocinante-adm:6817:9984:109
+SLURM_STEP_NODELIST=node-02
+SLURM_JOB_NAME=bash
+LC_ADDRESS=es_ES.UTF-8
+SLURM_SRUN_COMM_PORT=44087
+TMPDIR=/tmp
+LC_NUMERIC=es_ES.UTF-8
+SLURM_JOBID=13608
+SLURM_CONF=/etc/slurm/slurm.conf
+LOADEDMODULES=anaconda3/2023.3
+SLURM_JOB_QOS=normal
+SLURM_TOPOLOGY_ADDR_PATTERN=node
+CONDA_PROMPT_MODIFIER=(cat_drug_synergy) 
+SSH_TTY=/dev/pts/5
+MODULES_LMCONFLICT=anaconda3/2023.3&anaconda2&anaconda3
+MAIL=/var/spool/mail/mgonzalez
+Ni=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Ni/POTCAR
+SLURM_CPUS_ON_NODE=8
+Na=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Na/POTCAR
+SLURM_JOB_NUM_NODES=1
+SLURM_MEM_PER_NODE=32768
+SHELL=/bin/bash
+TERM=xterm-color
+VASP_COMMAND=srun vasp_std
+SLURM_JOB_UID=1013
+MANPATH_modshare=:1:/apps/exported/installed/interpreters/anaconda3/2022.10/share/man:1
+SLURM_JOB_PARTITION=spmth
+SLURM_PTY_WIN_ROW=51
+SELINUX_USE_CURRENT_RANGE=
+SLURM_CPU_BIND_LIST=0x00000000000000FF
+SLURM_JOB_USER=mgonzalez
+SLURM_PTY_WIN_COL=173
+PMI_JOBID=13608.0
+SLURM_NPROCS=1
+SHLVL=2
+SLURM_SUBMIT_HOST=rocinante-adm
+SLURM_JOB_ACCOUNT=phdstudent
+MANPATH=/apps/exported/installed/interpreters/anaconda3/2022.10/share/man::
+LC_TELEPHONE=es_ES.UTF-8
+SLURM_STEP_LAUNCHER_PORT=44087
+MODULEPATH=/etc/scl/modulefiles:/etc/scl/modulefiles:/apps/exported/modules/compilers:/apps/exported/modules/interpreters:/apps/exported/modules/libraries:/apps/exported/modules/softwares
+SLURM_PTY_PORT=40973
+SLURM_GTIDS=0
+LOGNAME=mgonzalez
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1013/bus
+Ce_h=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Ce_h/POTCAR
+XDG_RUNTIME_DIR=/run/user/1013
+MODULEPATH_modshare=/apps/exported/modules/libraries:2:/apps/exported/modules/compilers:2:/apps/exported/modules/softwares:2:/apps/exported/modules/interpreters:2
+POTPAW_PATH=potpaw_PBE.54
+Br=/apps/exported/installed/software/vasp/PP/potpaw_PBE.54/Br/POTCAR
+PATH=/home/mgonzalez/.conda/envs/cat_drug_synergy/bin:/apps/exported/installed/interpreters/anaconda3/2022.10/condabin:/apps/exported/installed/interpreters/anaconda3/2022.10/bin:/apps/exported/installed/libraries/pmix/3.2.2/bin:/usr/local/apps/slurm/latest/sbin:/usr/local/apps/slurm/latest/bin:/home/mgonzalez/.local/bin:/home/mgonzalez/bin:/apps/exported/installed/libraries/pmix/3.2.2/bin:/usr/local/apps/slurm/latest/sbin:/usr/local/apps/slurm/latest/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/local/go/bin:/home/mgonzalez/.fzf/bin
+SLURM_JOB_ID=13608
+LC_IDENTIFICATION=es_ES.UTF-8
+_LMFILES_=/apps/exported/modules/interpreters/anaconda3/2023.3
+SLURM_CPU_BIND_TYPE=mask_cpu:
+PS1=(cat_drug_synergy) \u@\h \[\e[32m\]\W \[\e[91m\]$(parse_git_branch)\[\e[00m\]$ 
+DEBUGINFOD_URLS=https://debuginfod.centos.org/ 
+SLURM_STEP_NUM_TASKS=1
+MODULESHOME=/usr/share/Modules
+CONDA_DEFAULT_ENV=cat_drug_synergy
+HISTSIZE=10000000
+SLURM_STEP_NUM_NODES=1
+pyFDBM=/home/mgonzalez/pyFDBM
+PMI_RANK=0
+SLURM_LOCALID=0
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LC_TIME=es_ES.UTF-8
+BASH_FUNC_which%%=() {  ( alias;
+ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}
+BASH_FUNC_module%%=() {  _module_raw "$@" 2>&1
+}
+BASH_FUNC__module_raw%%=() {  unset _mlshdbg;
+ if [ "${MODULES_SILENT_SHELL_DEBUG:-0}" = '1' ]; then
+ case "$-" in 
+ *v*x*)
+ set +vx;
+ _mlshdbg='vx'
+ ;;
+ *v*)
+ set +v;
+ _mlshdbg='v'
+ ;;
+ *x*)
+ set +x;
+ _mlshdbg='x'
+ ;;
+ *)
+ _mlshdbg=''
+ ;;
+ esac;
+ fi;
+ unset _mlre _mlIFS;
+ if [ -n "${IFS+x}" ]; then
+ _mlIFS=$IFS;
+ fi;
+ IFS=' ';
+ for _mlv in ${MODULES_RUN_QUARANTINE:-};
+ do
+ if [ "${_mlv}" = "${_mlv##*[!A-Za-z0-9_]}" -a "${_mlv}" = "${_mlv#[0-9]}" ]; then
+ if [ -n "`eval 'echo ${'$_mlv'+x}'`" ]; then
+ _mlre="${_mlre:-}${_mlv}_modquar='`eval 'echo ${'$_mlv'}'`' ";
+ fi;
+ _mlrv="MODULES_RUNENV_${_mlv}";
+ _mlre="${_mlre:-}${_mlv}='`eval 'echo ${'$_mlrv':-}'`' ";
+ fi;
+ done;
+ if [ -n "${_mlre:-}" ]; then
+ eval `eval ${_mlre} /usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash '"$@"'`;
+ else
+ eval `/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash "$@"`;
+ fi;
+ _mlstatus=$?;
+ if [ -n "${_mlIFS+x}" ]; then
+ IFS=$_mlIFS;
+ else
+ unset IFS;
+ fi;
+ unset _mlre _mlv _mlrv _mlIFS;
+ if [ -n "${_mlshdbg:-}" ]; then
+ set -$_mlshdbg;
+ fi;
+ unset _mlshdbg;
+ return $_mlstatus
+}
+BASH_FUNC_switchml%%=() {  typeset swfound=1;
+ if [ "${MODULES_USE_COMPAT_VERSION:-0}" = '1' ]; then
+ typeset swname='main';
+ if [ -e /usr/share/Modules/libexec/modulecmd.tcl ]; then
+ typeset swfound=0;
+ unset MODULES_USE_COMPAT_VERSION;
+ fi;
+ else
+ typeset swname='compatibility';
+ if [ -e /usr/share/Modules/libexec/modulecmd-compat ]; then
+ typeset swfound=0;
+ MODULES_USE_COMPAT_VERSION=1;
+ export MODULES_USE_COMPAT_VERSION;
+ fi;
+ fi;
+ if [ $swfound -eq 0 ]; then
+ echo "Switching to Modules $swname version";
+ source /usr/share/Modules/init/bash;
+ else
+ echo "Cannot switch to Modules $swname version, command not found";
+ return 1;
+ fi
+}
+BASH_FUNC_scl%%=() {  if [ "$1" = "load" -o "$1" = "unload" ]; then
+ eval "module $@";
+ else
+ /usr/bin/scl "$@";
+ fi
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+_=/apps/exported/installed/interpreters/anaconda3/2022.10/bin/jupyter
+OLDPWD=/home/mgonzalez/CODE
+PYDEVD_USE_FRAME_EVAL=NO
+JPY_PARENT_PID=223786
+CLICOLOR=1
+FORCE_COLOR=1
+CLICOLOR_FORCE=1
+PAGER=cat
+GIT_PAGER=cat
+MPLBACKEND=module://matplotlib_inline.backend_inline
+KMP_DUPLICATE_LIB_OK=True
+KMP_INIT_AT_FORK=FALSE

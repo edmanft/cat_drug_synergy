@@ -1,118 +1,190 @@
+import numpy as np
 import pandas as pd
-from typing import Optional, Dict, Any
-
-def load_dataset(
-    drug_syn_path: str,
-    cell_lines_path: str,
-    drug_portfolio_path: str
-) -> pd.DataFrame:
-    # Load drug combinations data
-    drug_synergy_df = pd.read_csv(drug_syn_path)
-    # Filter out low-quality data
-    drug_synergy_df = drug_synergy_df[drug_synergy_df['QA'] == 1]
-    # Drop unnecessary columns
-    drug_synergy_df.drop(columns=['Challenge', 'QA'], inplace=True)
-
-    # Load cell lines data
-    cell_lines_df = pd.read_csv(cell_lines_path)
-    # Drop the COSMIC ID column
-    cell_lines_df.drop(columns=['COSMIC ID'], inplace=True)
-
-    # Load drug portfolio data
-    drug_portfolio_df = pd.read_csv(drug_portfolio_path, sep='\t')
-    # Clean up data by removing unwanted columns
-    drug_portfolio_df.drop(columns=['Drug name'], inplace=True)
-
-    # Merge datasets to form a comprehensive dataset
-    full_dataset_df = pd.merge(drug_synergy_df, cell_lines_df, on='Cell line name', how='left')
-    # Merge for Compound A
-    full_dataset_df = pd.merge(full_dataset_df, drug_portfolio_df, left_on='Compound A', right_on='Challenge drug name', how='left', suffixes=('', '_A'))
-    # Merge for Compound B
-    full_dataset_df = pd.merge(full_dataset_df, drug_portfolio_df, left_on='Compound B', right_on='Challenge drug name', how='left', suffixes=('', '_B'))
-    # Rename columns for clarity
-    full_dataset_df.rename(columns={
-        'Challenge drug name': 'Challenge drug name_A',
-        'Putative target': 'Putative target_A',
-        'Function': 'Function_A',
-        'Pathway': 'Pathway_A',
-        'HBA': 'HBA_A',
-        'HBD': 'HBD_A',
-        'Molecular weight': 'Molecular weight_A',
-        'cLogP': 'cLogP_A',
-        'Lipinski': 'Lipinski_A',
-        'SMILES': 'SMILES_A'
-    }, inplace=True)
-    
-    ## Redundant with Compound A and Compound B
-    full_dataset_df.drop(columns=['Challenge drug name_A', 'Challenge drug name_B'], inplace=True)
-    
-     ## Redundant with GDSC tissue descriptor 2
-    full_dataset_df.drop(columns=['GDSC tissue descriptor 1', 'TCGA label'], inplace=True)
-
-    # More than 20% missing values
-    full_dataset_df.drop(columns=['HBA_A', 'HBD_A', 'Molecular weight_A', 'cLogP_A', 'Lipinski_A',
-       'SMILES_A', 'HBA_B', 'HBD_B', 'Molecular weight_B', 'cLogP_B',
-       'Lipinski_B', 'SMILES_B'], inplace=True)
+from collections import Counter
+from typing import Union, List, Tuple, Dict, Any
+from scipy.stats import pearsonr
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import (
+    StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
+from sklearn.base import BaseEstimator
 
 
-    return full_dataset_df
-
-def split_dataset(
-    full_dataset_df: pd.DataFrame
-) -> Dict[str, Dict[str, Any]]:
+def weighted_pearson(
+    comb_id_list: Union[List, np.ndarray, pd.Series],
+    y_pred: np.ndarray,
+    y_true: np.ndarray
+) -> Tuple[float, pd.DataFrame]:
     """
-    Splits the full dataset into training, testing, and leaderboard sets,
-    sorting each by 'Combination ID', and separates features and target variables.
+    Computes the weighted Pearson correlation coefficient and a DataFrame of
+    the individual Pearson coefficients for each combination.
 
     Parameters
     ----------
-    full_dataset_df : pandas.DataFrame
-        The full dataset containing features, targets, and metadata.
+    comb_id_list : list, numpy.ndarray, or pandas.Series
+        List of combination IDs.
+    y_pred : numpy.ndarray
+        Predicted synergy values.
+    y_true : numpy.ndarray
+        Ground truth synergy values.
 
     Returns
     -------
+    weighted_pearson : float
+        The weighted Pearson correlation coefficient.
+    pearson_weights_df : pandas.DataFrame
+        DataFrame containing the combination IDs, counts, and individual Pearson coefficients.
+    """
+    comb_id_arr = np.array(comb_id_list)
+
+    if not (len(comb_id_arr) == len(y_pred) == len(y_true)):
+        raise ValueError("comb_id_list, y_pred, and y_true must have the same length.")
+
+    comb_id_counts = Counter(comb_id_arr)
+    unique_comb_ids = list(comb_id_counts.keys())
+
+    individual_pearsons = []
+    numerator = 0.0
+    denominator = 0.0
+
+    for comb_id in unique_comb_ids:
+        mask = (comb_id_arr == comb_id)
+        n_samples = np.sum(mask)
+
+        if n_samples < 2:
+            rho_i = 0.0
+        else:
+            rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+            if np.isnan(rho_i):
+                rho_i = 0.0
+
+        weight = np.sqrt(n_samples - 1)
+        numerator += weight * rho_i
+        denominator += weight
+
+        individual_pearsons.append({
+            "Combination ID": comb_id,
+            "n_samples": n_samples,
+            "Pearson coefficient": rho_i
+        })
+
+    if denominator == 0:
+        weighted_pearson = np.nan
+    else:
+        weighted_pearson = numerator / denominator
+
+    pearson_weights_df = pd.DataFrame(individual_pearsons)
+
+    return weighted_pearson, pearson_weights_df
+
+def train_evaluate_pipeline(
+    datasets: Dict[str, Dict[str, Any]],
+    model: BaseEstimator,
+    categorical_encoder: str = 'OneHotEncoder',
+    verbose: bool = True
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Trains a machine learning model using a preprocessing pipeline on the training data
+    and evaluates it on the provided datasets using the weighted Pearson correlation coefficient.
+
+    Parameters
+    ----------
     datasets : dict
-        A dictionary with keys 'train', 'test', and 'lb', each containing another
-        dictionary with keys:
+        A dictionary containing 'train', 'test', and 'lb' datasets, each with keys:
             - 'X': pandas.DataFrame of features.
             - 'y': pandas.Series of target values.
             - 'comb_id': pandas.Series of combination IDs.
+    model : sklearn.base.BaseEstimator
+        The machine learning model to be trained.
+    categorical_encoder: str, optional
+        'OneHotEncoder' or 'LabelEncoder'. Determines which encoder to use for categorical features.
+        Default is 'OneHotEncoder'.
+    verbose : bool, optional
+        If True, prints out the list of categorical and continuous features. Default is True.
+
+    Returns
+    -------
+    evaluation_dict : dict
+        A dictionary containing evaluation results for each dataset split ('train', 'test', 'lb'),
+        with keys:
+            - 'wpc': float, weighted Pearson correlation coefficient.
+            - 'pear_weights': pandas.DataFrame, individual Pearson coefficients for each combination.
     """
-    # Split the dataset based on the 'Dataset' column
-    train_data = full_dataset_df[full_dataset_df['Dataset'] == 'train'].copy()
-    test_data = full_dataset_df[full_dataset_df['Dataset'] == 'test'].copy()
-    lb_data = full_dataset_df[full_dataset_df['Dataset'] == 'LB'].copy()
+    # Extract training data
+    X_train = datasets['train']['X']
+    y_train = datasets['train']['y']
+    train_comb_id = datasets['train']['comb_id']
 
-    # Sort each dataset by 'Combination ID'
-    train_data = train_data.sort_values(by='Combination ID', ascending=True)
-    test_data = test_data.sort_values(by='Combination ID', ascending=True)
-    lb_data = lb_data.sort_values(by='Combination ID', ascending=True)
+    # Identify categorical and continuous features
+    categorical_features = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
+    continuous_features = X_train.select_dtypes(include=['number']).columns.tolist()
 
-    # Extract 'Combination ID' columns
-    train_comb_id = train_data['Combination ID'].copy()
-    test_comb_id = test_data['Combination ID'].copy()
-    lb_comb_id = lb_data['Combination ID'].copy()
+    if verbose:
+        print("Categorical features:", categorical_features)
+        print("Continuous features:", continuous_features)
 
-    # Drop 'Combination ID' columns from datasets
-    train_data = train_data.drop(columns=['Combination ID'])
-    test_data = test_data.drop(columns=['Combination ID'])
-    lb_data = lb_data.drop(columns=['Combination ID'])
+    # Preprocessing pipelines for numeric and categorical features
+    
 
-    # Separate features and target variables
-    X_train = train_data.drop(columns=['Synergy score', 'Dataset'])
-    y_train = train_data['Synergy score'].copy()
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler())
+    ])
 
-    X_test = test_data.drop(columns=['Synergy score', 'Dataset'])
-    y_test = test_data['Synergy score'].copy()
+    # Choose the categorical transformer based on 'categorical_encoder'
+    if categorical_encoder == 'LabelEncoder':
+        # Use OrdinalEncoder for features
+        categorical_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('ordinal', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+        ])
+    elif categorical_encoder == 'OneHotEncoder':
+        # Use OneHotEncoder
+        categorical_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+        ])
+    else:
+        raise ValueError(f"Invalid categorical_encoder: {categorical_encoder}. Choose 'OneHotEncoder' or 'LabelEncoder'.")
 
-    X_lb = lb_data.drop(columns=['Synergy score', 'Dataset'])
-    y_lb = lb_data['Synergy score'].copy()
 
-    # Return a dictionary instead of tuples
-    datasets = {
-        'train': {'X': X_train, 'y': y_train, 'comb_id': train_comb_id},
-        'test': {'X': X_test, 'y': y_test, 'comb_id': test_comb_id},
-        'lb': {'X': X_lb, 'y': y_lb, 'comb_id': lb_comb_id},
-    }
 
-    return datasets
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, continuous_features),
+            ('cat', categorical_transformer, categorical_features)
+        ],
+        sparse_threshold=0.0  # Ensure output is dense
+    )
+
+
+
+    model_pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('model', model)
+    ])
+
+    # Train the model on the training data
+    model_pipeline.fit(X_train, y_train)
+
+    evaluation_dict = {}
+
+    # Evaluate the model on each dataset split
+    for split_name, data in datasets.items():
+        X = data['X']
+        y_true = data['y']
+        comb_id = data['comb_id']
+
+        # Make predictions
+        y_pred = model_pipeline.predict(X)
+
+        # Calculate weighted Pearson correlation
+        weighted_pear, pear_weights_df = weighted_pearson(comb_id, y_pred, y_true)
+
+        evaluation_dict[split_name] = {
+            'wpc': weighted_pear,
+            'pear_weights': pear_weights_df
+        }
+
+    return evaluation_dict
