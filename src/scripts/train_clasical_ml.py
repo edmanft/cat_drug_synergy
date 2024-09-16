@@ -35,8 +35,8 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.kernel_ridge import KernelRidge
 
-from cat_drug_synergy.src.data.process_data import load_dataset, split_sets
-from cat_drug_synergy.src.model.evaluation import train_evaluate_pipeline
+from ..data.process_data import load_dataset, split_sets
+from ..model.evaluation import train_evaluate_pipeline
 
 def main():
     """
