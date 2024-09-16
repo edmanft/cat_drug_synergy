@@ -10,6 +10,65 @@ from sklearn.preprocessing import (
     StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
 from sklearn.base import BaseEstimator
 
+def load_dataset(drug_syn_path: str, cell_lines_path: str, drug_portfolio_path: str) -> pd.DataFrame:
+    """
+    Load and merge datasets from the given file paths.
+
+    Parameters
+    ----------
+    drug_syn_path : str
+        Path to the drug synergy CSV file.
+    cell_lines_path : str
+        Path to the cell lines CSV file.
+    drug_portfolio_path : str
+        Path to the drug portfolio CSV file.
+
+    Returns
+    -------
+    pd.DataFrame
+        Merged DataFrame containing all datasets.
+    """
+    drug_syn_df = pd.read_csv(drug_syn_path)
+    cell_lines_df = pd.read_csv(cell_lines_path)
+    drug_portfolio_df = pd.read_csv(drug_portfolio_path)
+
+    # Example merging logic (adjust based on actual data structure)
+    merged_df = drug_syn_df.merge(cell_lines_df, on='cell_line_id', how='left')
+    merged_df = merged_df.merge(drug_portfolio_df, on='drug_id', how='left')
+
+    return merged_df
+
+def split_sets(full_dataset_df: pd.DataFrame) -> Dict[str, Dict[str, Any]]:
+    """
+    Split the full dataset into training, testing, and leaderboard sets.
+
+    Parameters
+    ----------
+    full_dataset_df : pd.DataFrame
+        The full dataset to be split.
+
+    Returns
+    -------
+    Dict[str, Dict[str, Any]]
+        A dictionary containing 'train', 'test', and 'lb' datasets, each with keys:
+            - 'X': pandas.DataFrame of features.
+            - 'y': pandas.Series of target values.
+            - 'comb_id': pandas.Series of combination IDs.
+    """
+    # Example splitting logic (adjust based on actual data structure)
+    train_df = full_dataset_df.sample(frac=0.7, random_state=42)
+    temp_df = full_dataset_df.drop(train_df.index)
+    test_df = temp_df.sample(frac=0.5, random_state=42)
+    lb_df = temp_df.drop(test_df.index)
+
+    datasets = {
+        'train': {'X': train_df.drop(columns=['target', 'comb_id']), 'y': train_df['target'], 'comb_id': train_df['comb_id']},
+        'test': {'X': test_df.drop(columns=['target', 'comb_id']), 'y': test_df['target'], 'comb_id': test_df['comb_id']},
+        'lb': {'X': lb_df.drop(columns=['target', 'comb_id']), 'y': lb_df['target'], 'comb_id': lb_df['comb_id']}
+    }
+
+    return datasets
+
 
 def weighted_pearson(
     comb_id_list: Union[List, np.ndarray, pd.Series],
