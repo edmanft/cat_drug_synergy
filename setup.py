@@ -14,6 +14,7 @@ setup(
         "seaborn",
         "IPython",
         "auto-sklearn",
+        "pytorch-tabnet",
     ],
     author="Manuel González Lastre",
     author_email="manuel.e.g.l1999@gmail.com",
