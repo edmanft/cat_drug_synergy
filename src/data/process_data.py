@@ -30,7 +30,11 @@ def load_dataset(drug_syn_path: str, cell_lines_path: str, drug_portfolio_path: 
     """
     drug_syn_df = pd.read_csv(drug_syn_path)
     cell_lines_df = pd.read_csv(cell_lines_path)
-    drug_portfolio_df = pd.read_csv(drug_portfolio_path)
+    try:
+        drug_portfolio_df = pd.read_csv(drug_portfolio_path)
+    except pd.errors.ParserError as e:
+        print(f"Error reading {drug_portfolio_path}: {e}")
+        exit(1)
 
     # Example merging logic (adjust based on actual data structure)
     merged_df = drug_syn_df.merge(cell_lines_df, on='cell_line_id', how='left')
