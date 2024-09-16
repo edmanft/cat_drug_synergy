@@ -4,7 +4,17 @@ setup(
     name="cat_drug_syn",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=[],  # Add your dependencies here
+    install_requires=[
+        "fastai",
+        "dtreeviz",
+        "fastbook",
+        "pandas",
+        "scikit-learn",
+        "xgboost",
+        "seaborn",
+        "IPython",
+        "auto-sklearn",
+    ],
     author="Manuel González Lastre",
     author_email="manuel.e.g.l1999@gmail.com",
     description="A package to identify synergic drug combinations using deep learning",
