@@ -1,0 +1,10 @@
+fastai
+dtreeviz
+fastbook
+pandas
+scikit-learn
+xgboost
+seaborn
+IPython
+pytorch-tabnet
+numpy
