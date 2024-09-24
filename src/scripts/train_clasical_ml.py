@@ -34,6 +34,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.kernel_ridge import KernelRidge
+from xgboost import XGBRegressor
 
 from src.data.process_data import load_dataset, split_dataset
 from src.model.evaluation import train_evaluate_pipeline
@@ -77,6 +78,7 @@ def main():
 
     # Define the list of regression models to evaluate
     models = [
+        ('XGBRegressor', XGBRegressor()),
         ('Linear Regression', LinearRegression()),
         ('Ridge Regression', Ridge()),
         ('Lasso Regression', Lasso()),
@@ -85,14 +87,11 @@ def main():
         ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=42)),
         ('Decision Tree', DecisionTreeRegressor(random_state=42)),
         ('Random Forest', RandomForestRegressor(random_state=42)),
-        ('Extra Trees', ExtraTreesRegressor(random_state=42)),
         ('Gradient Boosting', GradientBoostingRegressor(random_state=42)),
         ('AdaBoost', AdaBoostRegressor(random_state=42)),
         ('Support Vector Regression', SVR()),
-        ('K-Neighbors Regressor', KNeighborsRegressor()),
-        ('MLP Regressor', MLPRegressor(random_state=42, max_iter=500)),
         ('Gaussian Process', GaussianProcessRegressor()),
-        ('Kernel Ridge', KernelRidge()),
+        
     ]
 
     # Dictionary to store evaluation results

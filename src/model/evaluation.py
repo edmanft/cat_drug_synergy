@@ -143,7 +143,7 @@ def train_evaluate_pipeline(
         # Use OneHotEncoder
         categorical_transformer = Pipeline(steps=[
             ('imputer', SimpleImputer(strategy='most_frequent')),
-            ('onehot', OneHotEncoder(handle_unknown='ignore'))
+            ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
         ])
     else:
         raise ValueError(f"Invalid categorical_encoder: {categorical_encoder}. Choose 'OneHotEncoder' or 'LabelEncoder'.")

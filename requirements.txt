@@ -6,6 +6,5 @@ scikit-learn
 xgboost
 seaborn
 IPython
-auto-sklearn
 pytorch-tabnet
 numpy
