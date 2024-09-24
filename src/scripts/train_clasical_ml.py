@@ -35,7 +35,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.kernel_ridge import KernelRidge
 
-from src.data.process_data import load_dataset, split_sets
+from src.data.process_data import load_dataset, split_dataset
 from src.model.evaluation import train_evaluate_pipeline
 
 def main():
@@ -45,17 +45,18 @@ def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Training Script for Evaluating Multiple Regression Models.')
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
+    parser.add_argument('--encoder', type=str, choices=['LabelEncoder', 'OneHotEncoder'], default='OneHotEncoder', 
+        help='The type of categorical encoder to use.')
     args = parser.parse_args()
 
-    path_to_data = args.data_path
 
     # Suppress convergence warnings for cleaner output
     warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
     # Define the file paths to your datasets
-    drug_syn_path = os.path.join(path_to_data, 'drug_synergy.csv')
-    cell_lines_path = os.path.join(path_to_data, 'cell_lines.csv')
-    drug_portfolio_path = os.path.join(path_to_data, 'drug_portfolio.csv')
+    drug_syn_path = os.path.join(args.data_path, 'drug_synergy.csv')
+    cell_lines_path = os.path.join(args.data_path, 'cell_lines.csv')
+    drug_portfolio_path = os.path.join(args.data_path, 'drug_portfolio.csv')
 
     # Check if files exist
     if not os.path.exists(drug_syn_path):
@@ -72,7 +73,7 @@ def main():
     full_dataset_df = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
     # Split the dataset into training, testing, and leaderboard sets
-    datasets = split_sets(full_dataset_df)
+    datasets = split_dataset(full_dataset_df)
 
     # Define the list of regression models to evaluate
     models = [
@@ -104,6 +105,7 @@ def main():
             eval_dict = train_evaluate_pipeline(
                 datasets=datasets,
                 model=model,
+                categorical_encoder=args.encoder, 
                 verbose=False
             )
             evaluation_results[name] = eval_dict

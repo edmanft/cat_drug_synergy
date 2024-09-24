@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import (
-    StandardScaler, OneHotEncoder, FunctionTransformer)
+    StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
 from sklearn.base import BaseEstimator
 
 
@@ -81,6 +81,7 @@ def weighted_pearson(
 def train_evaluate_pipeline(
     datasets: Dict[str, Dict[str, Any]],
     model: BaseEstimator,
+    categorical_encoder: str = 'OneHotEncoder',
     verbose: bool = True
 ) -> Dict[str, Dict[str, Any]]:
     """
@@ -96,6 +97,9 @@ def train_evaluate_pipeline(
             - 'comb_id': pandas.Series of combination IDs.
     model : sklearn.base.BaseEstimator
         The machine learning model to be trained.
+    categorical_encoder: str, optional
+        'OneHotEncoder' or 'LabelEncoder'. Determines which encoder to use for categorical features.
+        Default is 'OneHotEncoder'.
     verbose : bool, optional
         If True, prints out the list of categorical and continuous features. Default is True.
 
@@ -120,31 +124,40 @@ def train_evaluate_pipeline(
         print("Categorical features:", categorical_features)
         print("Continuous features:", continuous_features)
 
-    # Check if the model can handle sparse input
-    requires_dense = isinstance(model, (BayesianRidge, GaussianProcessRegressor, LinearRegression))
-
     # Preprocessing pipelines for numeric and categorical features
+    
+
     numeric_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='median')),
         ('scaler', StandardScaler())
     ])
 
-    # Always output dense arrays
-    categorical_transformer = Pipeline(steps=[
-        ('imputer', SimpleImputer(strategy='most_frequent')),
-        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
-    ])
+    # Choose the categorical transformer based on 'categorical_encoder'
+    if categorical_encoder == 'LabelEncoder':
+        # Use OrdinalEncoder for features
+        categorical_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('ordinal', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
+        ])
+    elif categorical_encoder == 'OneHotEncoder':
+        # Use OneHotEncoder
+        categorical_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('onehot', OneHotEncoder(handle_unknown='ignore'))
+        ])
+    else:
+        raise ValueError(f"Invalid categorical_encoder: {categorical_encoder}. Choose 'OneHotEncoder' or 'LabelEncoder'.")
 
-    # Combine preprocessing steps with sparse_output=False
+
+
     preprocessor = ColumnTransformer(
         transformers=[
             ('num', numeric_transformer, continuous_features),
             ('cat', categorical_transformer, categorical_features)
-        ],
-        sparse_threshold=0.0
-    )
+        ])
 
-    # Create the full pipeline with the model
+
+
     model_pipeline = Pipeline(steps=[
         ('preprocessor', preprocessor),
         ('model', model)
