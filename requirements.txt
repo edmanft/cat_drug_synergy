@@ -8,3 +8,4 @@ seaborn
 IPython
 pytorch-tabnet
 numpy
+pytest
