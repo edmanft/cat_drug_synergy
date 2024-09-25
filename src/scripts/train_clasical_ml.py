@@ -78,7 +78,7 @@ def main():
 
     # Define the list of regression models to evaluate
     models = [
-        ('XGBRegressor', XGBRegressor()),
+        ('XGBRegressor', XGBRegressor(seed=42)),
         ('Linear Regression', LinearRegression()),
         ('Ridge Regression', Ridge()),
         ('Lasso Regression', Lasso()),
