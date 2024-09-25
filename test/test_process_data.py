@@ -11,6 +11,8 @@ def test_load_dataset():
         'Compound A': ['DrugA1', 'DrugA2'],
         'Compound B': ['DrugB1', 'DrugB2']
     }
+    drug_syn_df['GDSC tissue descriptor 1'] = ['desc1', 'desc2']
+    drug_syn_df['TCGA label'] = ['label1', 'label2']
     cell_lines_data = {
         'Cell line name': ['Cell1', 'Cell2'],
         'COSMIC ID': [123, 456]
