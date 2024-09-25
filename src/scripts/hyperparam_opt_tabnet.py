@@ -273,7 +273,7 @@ def main():
     eval_set=[(X_valid, y_valid)],
     eval_name=['valid'],
     eval_metric=['rmse'],
-    max_epochs=1000,
+    max_epochs=300,
     patience=50,
     batch_size=best_params['batch_size'],
     virtual_batch_size=best_params['virtual_batch_size'],
