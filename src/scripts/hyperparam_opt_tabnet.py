@@ -133,28 +133,35 @@ def main():
             'n_steps': trial.suggest_int('n_steps', 3, 10),
             'gamma': trial.suggest_float('gamma', 1.0, 2.0),
             'lambda_sparse': trial.suggest_float('lambda_sparse', 1e-6, 1e-3, log=True),
-            'optimizer_params': dict(lr=trial.suggest_float('lr', 1e-4, 1e-2, log=True)),
+            'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
             'mask_type': trial.suggest_categorical('mask_type', ['entmax', 'sparsemax']),
             'n_independent': trial.suggest_int('n_independent', 1, 5),
             'n_shared': trial.suggest_int('n_shared', 1, 5),
             'batch_size': trial.suggest_categorical('batch_size', [256, 512, 1024, 2048]),
             'virtual_batch_size': trial.suggest_categorical('virtual_batch_size', [64, 128, 256]), 
             'scheduler_type': trial.suggest_categorical('scheduler_type', ['StepLR', 'ExponentialLR', 'ReduceLROnPlateau']),
-            'scheduler_step_size': trial.suggest_int('scheduler_step_size', 10, 50),  # For StepLR and ExponentialLR
-            'scheduler_patience': trial.suggest_int('scheduler_patience', 10, 50),  # For ReduceLROnPlateau
-            'scheduler_gamma': trial.suggest_float('scheduler_gamma', 0.1, 0.9),  # Learning rate decay factor
-            
-        }
-        # Define the scheduler function and parameters based on the choice
-        if params['scheduler_type'] == 'StepLR':
+            }
+        
+        
+        # Conditionally suggest scheduler hyperparameters
+        scheduler_type = params['scheduler_type']
+        if scheduler_type == 'StepLR':
+            params['scheduler_step_size'] = trial.suggest_int('scheduler_step_size', 10, 50)
+            params['scheduler_gamma'] = trial.suggest_float('scheduler_gamma', 0.1, 0.9)
             scheduler_fn = torch.optim.lr_scheduler.StepLR
             scheduler_params = dict(step_size=params['scheduler_step_size'], gamma=params['scheduler_gamma'])
-        elif params['scheduler_type'] == 'ExponentialLR':
+        elif scheduler_type == 'ExponentialLR':
+            params['scheduler_gamma'] = trial.suggest_float('scheduler_gamma', 0.1, 0.9)
             scheduler_fn = torch.optim.lr_scheduler.ExponentialLR
             scheduler_params = dict(gamma=params['scheduler_gamma'])
-        elif params['scheduler_type'] == 'ReduceLROnPlateau':
+        elif scheduler_type == 'ReduceLROnPlateau':
+            params['scheduler_patience'] = trial.suggest_int('scheduler_patience', 10, 50)
+            params['scheduler_factor'] = trial.suggest_float('scheduler_factor', 0.1, 0.9)
             scheduler_fn = torch.optim.lr_scheduler.ReduceLROnPlateau
-            scheduler_params = dict(patience=params['scheduler_patience'], factor=params['scheduler_gamma'])
+            scheduler_params = dict(patience=params['scheduler_patience'], factor=params['scheduler_factor'])
+        else:
+            scheduler_fn = None
+            scheduler_params = None
 
 
         # Initialize model
@@ -169,7 +176,10 @@ def main():
             lambda_sparse=params['lambda_sparse'],
             n_independent=params['n_independent'],
             n_shared=params['n_shared'],
-            mask_type=params['mask_type']
+            mask_type=params['mask_type'], 
+            optimizer_params = dict(lr=params['lr']),
+            scheduler_fn=scheduler_fn,
+            scheduler_params=scheduler_params,
 )
 
         # Train model
@@ -183,9 +193,6 @@ def main():
             patience=10,
             batch_size=params['batch_size'],
             virtual_batch_size=params['virtual_batch_size'],
-            scheduler_fn=scheduler_fn,
-            scheduler_params=scheduler_params,
-            verbose=0,
         )
 
         # Evaluate on test set
@@ -205,6 +212,22 @@ def main():
     print(f"Best trial WPC: {-study.best_value}")
     print("Best hyperparameters:")
     print(best_params)
+   
+    # Retrieve the best scheduler and its parameters
+   
+    best_scheduler_type = best_params['scheduler_type']
+    if best_scheduler_type == 'StepLR':
+        scheduler_fn = torch.optim.lr_scheduler.StepLR
+        scheduler_params = dict(step_size=best_params['scheduler_step_size'], gamma=best_params['scheduler_gamma'])
+    elif best_scheduler_type == 'ExponentialLR':
+        scheduler_fn = torch.optim.lr_scheduler.ExponentialLR
+        scheduler_params = dict(gamma=best_params['scheduler_gamma'])
+    elif best_scheduler_type == 'ReduceLROnPlateau':
+        scheduler_fn = torch.optim.lr_scheduler.ReduceLROnPlateau
+        scheduler_params = dict(patience=best_params['scheduler_patience'], factor=best_params['scheduler_factor'])
+    else:
+        scheduler_fn = None
+        scheduler_params = None
 
     # Retrain model with best hyperparameters
     best_model = TabNetRegressor(
@@ -218,7 +241,10 @@ def main():
             lambda_sparse=best_params['lambda_sparse'],
             n_independent=best_params['n_independent'],
             n_shared=best_params['n_shared'],
-            mask_type=best_params['mask_type']
+            mask_type=best_params['mask_type'], 
+            optimizer_params= dict(lr=best_params['lr']),
+            scheduler_fn=scheduler_fn,
+            scheduler_params=scheduler_params,
     )
 
     # Re-adjust the categorical indices for the full dataset
@@ -239,6 +265,8 @@ def main():
     X_valid = datasets['test']['X_transformed']
     y_valid = datasets['test']['y']
 
+    
+
     best_model.fit(
     X_train=X_train_full,
     y_train=y_train_full,
@@ -249,10 +277,7 @@ def main():
     patience=50,
     batch_size=best_params['batch_size'],
     virtual_batch_size=best_params['virtual_batch_size'],
-    scheduler_fn=scheduler_fn,
-    scheduler_params=scheduler_params,
-    verbose=args.verbose,
-)
+    )
 
 
     # Evaluate the model on each dataset split
@@ -280,8 +305,8 @@ def main():
     # Output the evaluation_dict and hyperparameter dictionary
     print("Best hyperparameters:")
     print(best_params)
-    print("Evaluation dictionary:")
-    print(evaluation_dict)
+    print(f"WPC: {evaluation_dict['lb']['wpc']}")
+
 
 if __name__ == '__main__':
     main()
