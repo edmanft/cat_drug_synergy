@@ -71,7 +71,7 @@ def main():
         exit(1)
 
     # Load and process the dataset
-    full_dataset_df = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
+    full_dataset_df, _ = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)

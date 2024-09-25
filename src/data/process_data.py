@@ -63,8 +63,36 @@ def load_dataset(
        'SMILES_A', 'HBA_B', 'HBD_B', 'Molecular weight_B', 'cLogP_B',
        'Lipinski_B', 'SMILES_B'], inplace=True)
 
+    # Define categorical and numerical columns
+    categorical_columns = [
+        'Cell line name', 'Compound A', 'Compound B', 'GDSC tissue descriptor 2', 
+        'MSI', 'Growth properties', 'Putative target_A', 'Function_A', 'Pathway_A', 
+        'Putative target_B', 'Function_B', 'Pathway_B'
+    ]
+    numerical_columns = [
+        'Max. conc. A', 'IC50 A', 'H A', 'Einf A', 
+        'Max. conc. B', 'IC50 B', 'H B', 'Einf B'
+    ]
+    # Define columns that will not be used in training but are needed for future processing steps
+    not_training_columns = ['Synergy score', 'Combination ID', 'Dataset']
 
-    return full_dataset_df
+
+    # Reorder the columns: categorical first, then numerical
+    full_dataset_df = full_dataset_df[categorical_columns + numerical_columns + not_training_columns]
+
+    # Create a dictionary with column types and their indices
+    column_type_dict = {
+        'categorical': {
+            'col_names': categorical_columns,
+            'col_idx': [full_dataset_df.columns.get_loc(col) for col in categorical_columns]
+        },
+        'numerical': {
+            'col_names': numerical_columns,
+            'col_idx': [full_dataset_df.columns.get_loc(col) for col in numerical_columns]
+        }
+    }
+
+    return full_dataset_df, column_type_dict
 
 def split_dataset(
     full_dataset_df: pd.DataFrame

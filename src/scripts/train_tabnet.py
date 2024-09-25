@@ -59,7 +59,7 @@ def main():
         exit(1)
 
     # Load and process the dataset
-    full_dataset_df = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
+    full_dataset_df, column_type_dict = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
@@ -68,51 +68,10 @@ def main():
     models = [
         ('TabNetRegressor', TabNetRegressor()),
         ]
+    print(datasets)
+    print(datasets['train']['X'].columns)
+    print(column_type_dict)
 
-    # Dictionary to store evaluation results
-    evaluation_results: Dict[str, Dict[str, Any]] = {}
-
-    # Iterate over each model, train and evaluate
-    for name, model in models:
-        print(f"Training and evaluating {name}...")
-        try:
-            eval_dict = train_evaluate_tabnet(
-                datasets=datasets,
-                model=model,
-                categorical_encoder=args.encoder, 
-                verbose=False
-            )
-            evaluation_results[name] = eval_dict
-            print(f"{name} - Train Weighted Pearson Correlation: {eval_dict['train']['wpc']:.4f}")
-            print(f"{name} - Test Weighted Pearson Correlation: {eval_dict['test']['wpc']:.4f}")
-            print(f"{name} - LB Weighted Pearson Correlation: {eval_dict['lb']['wpc']:.4f}\n")
-        except Exception as e:
-            print(f"Error training {name}: {e}\n")
-
-    # Collect results into lists for DataFrame creation
-    model_list = []
-    train_wpc_list = []
-    test_wpc_list = []
-    lb_wpc_list = []
-
-    for name, eval_dict in evaluation_results.items():
-        model_list.append(name)
-        train_wpc_list.append(eval_dict['train']['wpc'])
-        test_wpc_list.append(eval_dict['test']['wpc'])
-        lb_wpc_list.append(eval_dict['lb']['wpc'])
-
-    # Create a DataFrame to display evaluation results
-    evaluation_df = pd.DataFrame({
-        'Model': model_list,
-        'Train WPC': train_wpc_list,
-        'Test WPC': test_wpc_list,
-        'LB WPC': lb_wpc_list
-    })
-
-    # Sort the DataFrame based on the Leaderboard Weighted Pearson Correlation
-    evaluation_df = evaluation_df.sort_values(by='LB WPC', ascending=False)
-    print("Evaluation Results:")
-    print(evaluation_df.reset_index(drop=True))
 
 if __name__ == '__main__':
     main()
