@@ -9,7 +9,7 @@ and then iterates over a list of regression models to train and evaluate them us
 a custom pipeline. The evaluation results are collected and displayed in a sorted DataFrame.
 
 Usage:
-    python script_name.py --data_path /path/to/data
+    python script_name.py --data_path path/to/data/ --encoder OneHotEncoder
 
     Ensure that the dataset paths are correctly specified before running the script.
 """
