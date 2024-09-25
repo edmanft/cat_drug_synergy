@@ -10,3 +10,4 @@ pytorch-tabnet
 numpy
 pytest
 optuna
+pytorch_tabular

@@ -188,7 +188,7 @@ def main():
             y_train=y_train,
             eval_set=[(X_test, y_test)],
             eval_name=['test'],
-            eval_metric=['rmse'],
+            eval_metric=['mse'],
             max_epochs=300,
             patience=10,
             batch_size=params['batch_size'],

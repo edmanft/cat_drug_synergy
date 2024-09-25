@@ -131,7 +131,7 @@ def main():
     
     model.fit(X_train=X_train, y_train=y_train,
         eval_set=[(X_test, y_test)],
-        eval_name=['test'], eval_metric=['rmse'],
+        eval_name=['test'], eval_metric=['mse'],
         max_epochs=1000, patience=50, batch_size=1024, virtual_batch_size=128)
     print(f"Tabnet model trained successfully.")
 
