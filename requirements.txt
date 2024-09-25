@@ -9,3 +9,4 @@ IPython
 pytorch-tabnet
 numpy
 pytest
+optuna
