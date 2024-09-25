@@ -111,11 +111,11 @@ def main():
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         ('TabNet', TabNetModelConfig),
-        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
-        #('Node', NodeConfig),
-        #('AutoInt', AutoIntConfig),
-        #('FTTransformer', FTTransformerConfig),
-        #('TabTransformer', TabTransformerConfig),
+        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        ('Node', NodeConfig),
+        ('AutoInt', AutoIntConfig),
+        ('FTTransformer', FTTransformerConfig),
+        ('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results
@@ -146,7 +146,8 @@ def main():
                 accelerator='gpu' if torch.cuda.is_available() else 'cpu',  # Use accelerator for device selection
                 devices=1 if torch.cuda.is_available() else None,  # Number of devices (GPUs/CPUs)
                 early_stopping="valid_loss",
-                early_stopping_patience=10,
+                early_stopping_patience=30,
+
             )
 
             # Instantiate the TabularModel
@@ -161,6 +162,7 @@ def main():
             tabular_model.fit(train=full_df[full_df['split'] == 'train'])
 
             # Evaluate the model on each dataset split
+            
             evaluation_dict = {}
 
             for split_name in ['train', 'test', 'lb']:
@@ -168,25 +170,21 @@ def main():
                 y_true = split_df[target_col].values
                 comb_id = split_df['comb_id']
                 X_eval = split_df.drop(columns=[target_col, 'split', 'comb_id'])
-                
-                 # Make predictions
-                            # Make predictions
-            predictions = tabular_model.predict(X_eval)
-            
-            # Extract predictions from 'target_prediction'
-            if 'target_prediction' in predictions.columns:
-                y_pred = predictions['target_prediction'].values.flatten()
-            else:
-                # If the structure is different, print the columns and structure
-                print(f"Columns in predictions: {predictions.columns}")
-                raise ValueError("Unexpected prediction structure. Please inspect the output.")
 
-            # Calculate weighted Pearson correlation
-            weighted_pear, pear_weights_df = weighted_pearson(comb_id, y_pred, y_true)
-            evaluation_dict[split_name] = {
-                'wpc': weighted_pear,
-                'pear_weights': pear_weights_df
-            }
+                # Make predictions
+                predictions = tabular_model.predict(X_eval)
+                
+                y_pred = predictions['target_prediction'].values.flatten()
+
+                # Calculate weighted Pearson correlation
+                weighted_pear, pear_weights_df = weighted_pearson(comb_id, y_pred, y_true)
+                evaluation_dict[split_name] = {
+                    'wpc': weighted_pear,
+                    'pear_weights': pear_weights_df
+                }
+
+            
+
 
 
             evaluation_results[model_name] = evaluation_dict
