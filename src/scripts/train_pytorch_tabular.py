@@ -22,6 +22,10 @@ from typing import Dict, Any
 from sklearn.exceptions import ConvergenceWarning
 import logging
 import warnings
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
 
 from pytorch_tabular import TabularModel
 from pytorch_tabular.config import DataConfig, OptimizerConfig, TrainerConfig
@@ -50,6 +54,7 @@ def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Training Script for Evaluating PyTorch Tabular Models.')
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
+    parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
     parser.add_argument('--verbose', action='store_true', help='Print detailed output.')
     args = parser.parse_args()
 
@@ -78,19 +83,47 @@ def main():
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
 
-    # Define categorical and continuous features
-    categorical_cols = column_type_dict['categorical']['col_names']
-    continuous_cols = column_type_dict['numerical']['col_names']
+    # Define categorical and continuous features based on the `--no_embedding` flag
+    if args.no_embedding:
+        # If no embedding is specified, apply OneHotEncoding to categorical columns
+        print("Applying OneHotEncoding to categorical variables...")
+
+        categorical_cols = column_type_dict['categorical']['col_names']
+        continuous_cols = column_type_dict['numerical']['col_names']
+
+        # Perform OneHotEncoding on the categorical columns
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ('cat', Pipeline(steps=[
+                    ('imputer', SimpleImputer(strategy='most_frequent')),
+                    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))]), categorical_cols)
+            ]
+        )
+        preprocessor.set_output(transform='pandas')
+        datasets['train']['X'] = preprocessor.fit_transform(datasets['train']['X'])
+
+        for split in ['test', 'lb']:
+            datasets[split]['X'] = preprocessor.transform(datasets[split]['X'])
+
+        # Since we've OneHotEncoded, categorical columns will be empty
+        categorical_cols = []
+        continuous_cols = list(datasets['train']['X'].columns)
+
+
+    else:
+        # Use the standard embedding configuration
+        categorical_cols = column_type_dict['categorical']['col_names']
+        continuous_cols = column_type_dict['numerical']['col_names']
 
 
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         ('TabNet', TabNetModelConfig),
-        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
-        ('Node', NodeConfig),
-        ('AutoInt', AutoIntConfig),
-        ('FTTransformer', FTTransformerConfig),
-        ('TabTransformer', TabTransformerConfig),
+        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        #('Node', NodeConfig),
+        #('AutoInt', AutoIntConfig),
+        #('FTTransformer', FTTransformerConfig),
+        #('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results
@@ -116,7 +149,7 @@ def main():
             )
 
             trainer_config = TrainerConfig(
-                max_epochs=100,
+                max_epochs=5,
                 batch_size=512,
                 accelerator='gpu' if torch.cuda.is_available() else 'cpu',  # Use accelerator for device selection
                 devices=1 if torch.cuda.is_available() else None,  # Number of devices (GPUs/CPUs)
