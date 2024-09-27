@@ -37,7 +37,7 @@ from sklearn.kernel_ridge import KernelRidge
 from xgboost import XGBRegressor
 
 from src.data.process_data import load_dataset, split_dataset
-from src.model.evaluation import train_evaluate_pipeline
+from src.model.evaluation import train_evaluate_sklearn_pipeline
 
 def main():
     """
@@ -101,7 +101,7 @@ def main():
     for name, model in models:
         print(f"Training and evaluating {name}...")
         try:
-            eval_dict = train_evaluate_pipeline(
+            eval_dict = train_evaluate_sklearn_pipeline(
                 datasets=datasets,
                 model=model,
                 categorical_encoder=args.encoder, 
