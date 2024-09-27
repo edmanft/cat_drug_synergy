@@ -35,7 +35,7 @@ from pytorch_tabular.models.tabnet.config import TabNetModelConfig
 import torch
 
 from src.data.process_data import load_dataset, split_dataset
-from src.model.evaluation import weighted_pearson
+from src.model.evaluation import weighted_pearson, train_evaluate_pytorch_tabular_pipeline
 
 # Suppress common warnings
 logging.getLogger("pytorch_lightning").setLevel(logging.ERROR)
@@ -78,35 +78,10 @@ def main():
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
 
-    # Combine the datasets for PyTorch Tabular (it expects a single DataFrame)
-    train_df = datasets['train']['X'].copy()
-    train_df['target'] = datasets['train']['y'].values
-    train_df['comb_id'] = datasets['train']['comb_id']
-
-    test_df = datasets['test']['X'].copy()
-    test_df['target'] = datasets['test']['y'].values
-    test_df['comb_id'] = datasets['test']['comb_id']
-
-    lb_df = datasets['lb']['X'].copy()
-    lb_df['target'] = datasets['lb']['y'].values
-    lb_df['comb_id'] = datasets['lb']['comb_id']
-
-    # For PyTorch Tabular, we'll combine all data and specify splits
-    full_df = pd.concat([train_df, test_df, lb_df], axis=0)
-    full_df.reset_index(drop=True, inplace=True)
-
-    # Create a 'split' column to indicate the dataset split
-    num_train = len(train_df)
-    num_test = len(test_df)
-    full_df['split'] = 'lb'
-    full_df.loc[:num_train-1, 'split'] = 'train'
-    full_df.loc[num_train:num_train+num_test-1, 'split'] = 'test'
-
     # Define categorical and continuous features
     categorical_cols = column_type_dict['categorical']['col_names']
     continuous_cols = column_type_dict['numerical']['col_names']
 
-    target_col = 'target'
 
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
@@ -127,14 +102,14 @@ def main():
         try:
             # Define configurations for PyTorch Tabular
             data_config = DataConfig(
-                target=[target_col],
+                target=['synergy_score'],
                 continuous_cols=continuous_cols,
                 categorical_cols=categorical_cols,
-                validation_split=0.2,  # Use 20% of training data for validation internally
-            )
+               )
 
             # Model-specific configurations
             model_config = ModelConfigClass(
+                seed=42,
                 task="regression",
                 metrics=["mean_squared_error"],
                 metrics_params=[{}],
@@ -142,55 +117,26 @@ def main():
 
             trainer_config = TrainerConfig(
                 max_epochs=100,
-                batch_size=1024,
+                batch_size=512,
                 accelerator='gpu' if torch.cuda.is_available() else 'cpu',  # Use accelerator for device selection
                 devices=1 if torch.cuda.is_available() else None,  # Number of devices (GPUs/CPUs)
                 early_stopping="valid_loss",
                 early_stopping_patience=30,
-
             )
 
-            # Instantiate the TabularModel
-            tabular_model = TabularModel(
+            # Call the training and evaluation pipeline
+            eval_dict = train_evaluate_pytorch_tabular_pipeline(
+                datasets=datasets,
                 data_config=data_config,
                 model_config=model_config,
-                optimizer_config=OptimizerConfig(),
                 trainer_config=trainer_config,
+                verbose=args.verbose
             )
 
-            # Train the model (no need to specify validation data, handled by `validation_split`)
-            tabular_model.fit(train=full_df[full_df['split'] == 'train'])
-
-            # Evaluate the model on each dataset split
-            
-            evaluation_dict = {}
-
-            for split_name in ['train', 'test', 'lb']:
-                split_df = full_df[full_df['split'] == split_name]
-                y_true = split_df[target_col].values
-                comb_id = split_df['comb_id']
-                X_eval = split_df.drop(columns=[target_col, 'split', 'comb_id'])
-
-                # Make predictions
-                predictions = tabular_model.predict(X_eval)
-                
-                y_pred = predictions['target_prediction'].values.flatten()
-
-                # Calculate weighted Pearson correlation
-                weighted_pear, pear_weights_df = weighted_pearson(comb_id, y_pred, y_true)
-                evaluation_dict[split_name] = {
-                    'wpc': weighted_pear,
-                    'pear_weights': pear_weights_df
-                }
-
-            
-
-
-
-            evaluation_results[model_name] = evaluation_dict
-            print(f"{model_name} - Train Weighted Pearson Correlation: {evaluation_dict['train']['wpc']:.4f}")
-            print(f"{model_name} - Test Weighted Pearson Correlation: {evaluation_dict['test']['wpc']:.4f}")
-            print(f"{model_name} - LB Weighted Pearson Correlation: {evaluation_dict['lb']['wpc']:.4f}\n")
+            evaluation_results[model_name] = eval_dict
+            print(f"{model_name} - Train Weighted Pearson Correlation: {eval_dict['train']['wpc']:.4f}")
+            print(f"{model_name} - Test Weighted Pearson Correlation: {eval_dict['test']['wpc']:.4f}")
+            print(f"{model_name} - LB Weighted Pearson Correlation: {eval_dict['lb']['wpc']:.4f}\n")
 
         except Exception as e:
             print(f"Error training {model_name}: {e}\n")
