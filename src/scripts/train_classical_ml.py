@@ -9,7 +9,7 @@ and then iterates over a list of regression models to train and evaluate them us
 a custom pipeline. The evaluation results are collected and displayed in a sorted DataFrame.
 
 Usage:
-    python script_name.py --data_path /path/to/data
+    python script_name.py --data_path path/to/data/ --encoder OneHotEncoder
 
     Ensure that the dataset paths are correctly specified before running the script.
 """
@@ -37,7 +37,7 @@ from sklearn.kernel_ridge import KernelRidge
 from xgboost import XGBRegressor
 
 from src.data.process_data import load_dataset, split_dataset
-from src.model.evaluation import train_evaluate_pipeline
+from src.model.evaluation import train_evaluate_sklearn_pipeline
 
 def main():
     """
@@ -71,14 +71,14 @@ def main():
         exit(1)
 
     # Load and process the dataset
-    full_dataset_df = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
+    full_dataset_df, _ = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
 
     # Define the list of regression models to evaluate
     models = [
-        ('XGBRegressor', XGBRegressor()),
+        ('XGBRegressor', XGBRegressor(seed=42)),
         ('Linear Regression', LinearRegression()),
         ('Ridge Regression', Ridge()),
         ('Lasso Regression', Lasso()),
@@ -101,7 +101,7 @@ def main():
     for name, model in models:
         print(f"Training and evaluating {name}...")
         try:
-            eval_dict = train_evaluate_pipeline(
+            eval_dict = train_evaluate_sklearn_pipeline(
                 datasets=datasets,
                 model=model,
                 categorical_encoder=args.encoder, 
