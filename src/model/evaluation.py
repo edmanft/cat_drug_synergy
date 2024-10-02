@@ -14,6 +14,15 @@ from pytorch_tabular import TabularModel
 from pytorch_tabular.config import DataConfig, TrainerConfig, OptimizerConfig, ModelConfig
 
 
+def freeze_categorical_embeddings(model):
+    """
+    Freezes the categorical embedding layers of the given model.
+    """
+    for name, module in model.named_modules():
+        if isinstance(module, torch.nn.Embedding):
+            for param in module.parameters():
+                param.requires_grad = False
+
 def weighted_pearson(
     comb_id_list: Union[List, np.ndarray, pd.Series],
     y_pred: np.ndarray,
@@ -197,7 +206,7 @@ def train_evaluate_pytorch_tabular_pipeline(
     model_config: ModelConfig,
     trainer_config: TrainerConfig,
     optimizer_config: OptimizerConfig = None,
-    verbose: bool = True
+    verbose: bool = True, 
 ) -> Dict[str, Dict[str, Any]]:
     """
     Trains a PyTorch Tabular model using the provided configurations and datasets,
@@ -253,6 +262,7 @@ def train_evaluate_pytorch_tabular_pipeline(
         optimizer_config=optimizer_config,
         trainer_config=trainer_config,
     )
+
 
     # Train the model (no need to specify validation data, handled by `validation_split`)
     tabular_model.fit(train=train_df, validation=test_df)
