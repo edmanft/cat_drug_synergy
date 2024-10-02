@@ -48,6 +48,7 @@ def main():
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
     parser.add_argument('--encoder', type=str, choices=['LabelEncoder', 'OneHotEncoder'], default='OneHotEncoder', 
         help='The type of categorical encoder to use.')
+    parser.add_argument('--seed', type=int, default=42, help='Random seed')
     args = parser.parse_args()
 
 
@@ -78,17 +79,17 @@ def main():
 
     # Define the list of regression models to evaluate
     models = [
-        ('XGBRegressor', XGBRegressor(seed=42)),
+        ('XGBRegressor', XGBRegressor(seed=args.seed)),
         ('Linear Regression', LinearRegression()),
         ('Ridge Regression', Ridge()),
         ('Lasso Regression', Lasso()),
         ('ElasticNet Regression', ElasticNet()),
         ('Bayesian Ridge Regression', BayesianRidge()),
-        ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=42)),
-        ('Decision Tree', DecisionTreeRegressor(random_state=42)),
-        ('Random Forest', RandomForestRegressor(random_state=42)),
-        ('Gradient Boosting', GradientBoostingRegressor(random_state=42)),
-        ('AdaBoost', AdaBoostRegressor(random_state=42)),
+        ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=args.seed)),
+        ('Decision Tree', DecisionTreeRegressor(random_state=args.seed)),
+        ('Random Forest', RandomForestRegressor(random_state=args.seed)),
+        ('Gradient Boosting', GradientBoostingRegressor(random_state=args.seed)),
+        ('AdaBoost', AdaBoostRegressor(random_state=args.seed)),
         ('Support Vector Regression', SVR()),
         ('Gaussian Process', GaussianProcessRegressor()),
         

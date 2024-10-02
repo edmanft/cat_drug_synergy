@@ -50,11 +50,18 @@ warnings.filterwarnings("ignore", category=pd.errors.PerformanceWarning)
 def main():
     """
     Main function to execute the training and evaluation of PyTorch Tabular models.
+
+    Example:
+    python src/scripts/train_pytorch_tabular.py --data_path data --batch_size 256 --max_epoch 10 --es_patience 5 --no_embedding --seed 42
     """
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Training Script for Evaluating PyTorch Tabular Models.')
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
+    parser.add_argument('--batch_size', type=int, default=512, help='Batch size for training.')
+    parser.add_argument('--max_epoch', type=int, default=200, help='Maximum number of training epochs.')
+    parser.add_argument('--es_patience', type=int, default=30, help='Early stopping patience')
     parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
+    parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--verbose', action='store_true', help='Print detailed output.')
     args = parser.parse_args()
 
@@ -119,11 +126,11 @@ def main():
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         ('TabNet', TabNetModelConfig),
-        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
-        #('Node', NodeConfig),
-        #('AutoInt', AutoIntConfig),
+        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        ('Node', NodeConfig),
+        ('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
-        #('TabTransformer', TabTransformerConfig),
+        ('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results
@@ -142,19 +149,19 @@ def main():
 
             # Model-specific configurations
             model_config = ModelConfigClass(
-                seed=42,
+                seed=args.seed,
                 task="regression",
                 metrics=["mean_squared_error"],
                 metrics_params=[{}],
             )
 
             trainer_config = TrainerConfig(
-                max_epochs=5,
-                batch_size=512,
+                max_epochs=args.max_epoch,
+                batch_size=args.batch_size,
                 accelerator='gpu' if torch.cuda.is_available() else 'cpu',  # Use accelerator for device selection
                 devices=1 if torch.cuda.is_available() else None,  # Number of devices (GPUs/CPUs)
                 early_stopping="valid_loss",
-                early_stopping_patience=30,
+                early_stopping_patience=args.es_patience,
             )
 
             # Call the training and evaluation pipeline
