@@ -292,4 +292,4 @@ def train_evaluate_pytorch_tabular_pipeline(
             'pear_weights': pear_weights_df
         }
 
-    return evaluation_dict
+    return evaluation_dict, tabular_model

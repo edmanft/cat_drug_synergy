@@ -62,6 +62,7 @@ def main():
     parser.add_argument('--es_patience', type=int, default=30, help='Early stopping patience')
     parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
+    parser.add_argument('--save_path', type=str, default=None, help='Directory where the models will be saved. If not provided, models will not be saved.')
     parser.add_argument('--verbose', action='store_true', help='Print detailed output.')
     args = parser.parse_args()
 
@@ -127,7 +128,7 @@ def main():
     model_configs = [
         ('TabNet', TabNetModelConfig),
         ('CategoryEmbedding', CategoryEmbeddingModelConfig),
-        ('Node', NodeConfig),
+        #('Node', NodeConfig),
         ('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
         ('TabTransformer', TabTransformerConfig),
@@ -165,18 +166,26 @@ def main():
             )
 
             # Call the training and evaluation pipeline
-            eval_dict = train_evaluate_pytorch_tabular_pipeline(
+            eval_dict, trained_model = train_evaluate_pytorch_tabular_pipeline(
                 datasets=datasets,
                 data_config=data_config,
                 model_config=model_config,
                 trainer_config=trainer_config,
                 verbose=args.verbose
             )
+            
 
             evaluation_results[model_name] = eval_dict
             print(f"{model_name} - Train Weighted Pearson Correlation: {eval_dict['train']['wpc']:.4f}")
             print(f"{model_name} - Test Weighted Pearson Correlation: {eval_dict['test']['wpc']:.4f}")
             print(f"{model_name} - LB Weighted Pearson Correlation: {eval_dict['lb']['wpc']:.4f}\n")
+
+            if args.save_path is not None:
+                model_save_path = os.path.join(args.save_path, f"{model_name}_model.ckpt")
+                trained_model.save_model(model_save_path)
+                if args.verbose:
+                    print(f"Model saved to: {model_save_path}")
+
 
         except Exception as e:
             print(f"Error training {model_name}: {e}\n")
