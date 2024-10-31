@@ -61,8 +61,8 @@ def main():
     parser.add_argument('--max_epoch', type=int, default=200, help='Maximum number of training epochs.')
     parser.add_argument('--es_patience', type=int, default=30, help='Early stopping patience')
     parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
+    parser.add_argument('--freeze_catemb', action='store_true', help='Freeze the categorical embedding layers of all models.')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
-    parser.add_argument('--save_path', type=str, default=None, help='Directory where the models will be saved. If not provided, models will not be saved.')
     parser.add_argument('--verbose', action='store_true', help='Print detailed output.')
     args = parser.parse_args()
 
@@ -127,11 +127,11 @@ def main():
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         ('TabNet', TabNetModelConfig),
-        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
         #('Node', NodeConfig),
-        ('AutoInt', AutoIntConfig),
+        #('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
-        ('TabTransformer', TabTransformerConfig),
+        #('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results
@@ -165,55 +165,19 @@ def main():
                 early_stopping_patience=args.es_patience,
             )
 
-            # Call the training and evaluation pipeline
-            eval_dict, trained_model = train_evaluate_pytorch_tabular_pipeline(
-                datasets=datasets,
+             
+            tabular_model = TabularModel(
                 data_config=data_config,
                 model_config=model_config,
+                optimizer_config=OptimizerConfig(),
                 trainer_config=trainer_config,
-                verbose=args.verbose
             )
+            print(tabular_model.trainer.model)
+
             
-
-            evaluation_results[model_name] = eval_dict
-            print(f"{model_name} - Train Weighted Pearson Correlation: {eval_dict['train']['wpc']:.4f}")
-            print(f"{model_name} - Test Weighted Pearson Correlation: {eval_dict['test']['wpc']:.4f}")
-            print(f"{model_name} - LB Weighted Pearson Correlation: {eval_dict['lb']['wpc']:.4f}\n")
-
-            if args.save_path is not None:
-                model_save_path = os.path.join(args.save_path, f"{model_name}_model.ckpt")
-                trained_model.save_model(model_save_path)
-                if args.verbose:
-                    print(f"Model saved to: {model_save_path}")
-
-
         except Exception as e:
             print(f"Error training {model_name}: {e}\n")
-
-    # Collect results into lists for DataFrame creation
-    model_list = []
-    train_wpc_list = []
-    test_wpc_list = []
-    lb_wpc_list = []
-
-    for name, eval_dict in evaluation_results.items():
-        model_list.append(name)
-        train_wpc_list.append(eval_dict['train']['wpc'])
-        test_wpc_list.append(eval_dict['test']['wpc'])
-        lb_wpc_list.append(eval_dict['lb']['wpc'])
-
-    # Create a DataFrame to display evaluation results
-    evaluation_df = pd.DataFrame({
-        'Model': model_list,
-        'Train WPC': train_wpc_list,
-        'Test WPC': test_wpc_list,
-        'LB WPC': lb_wpc_list
-    })
-
-    # Sort the DataFrame based on the Leaderboard Weighted Pearson Correlation
-    evaluation_df = evaluation_df.sort_values(by='LB WPC', ascending=False)
-    print("Evaluation Results:")
-    print(evaluation_df.reset_index(drop=True))
+        
 
 if __name__ == '__main__':
     main()
