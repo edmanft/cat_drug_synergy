@@ -79,19 +79,19 @@ def main():
 
     # Define the list of regression models to evaluate
     models = [
-        ('XGBRegressor', XGBRegressor(seed=args.seed)),
+        #('XGBRegressor', XGBRegressor(seed=args.seed)),
         ('Linear Regression', LinearRegression()),
         ('Ridge Regression', Ridge()),
-        ('Lasso Regression', Lasso()),
-        ('ElasticNet Regression', ElasticNet()),
-        ('Bayesian Ridge Regression', BayesianRidge()),
-        ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=args.seed)),
-        ('Decision Tree', DecisionTreeRegressor(random_state=args.seed)),
-        ('Random Forest', RandomForestRegressor(random_state=args.seed)),
-        ('Gradient Boosting', GradientBoostingRegressor(random_state=args.seed)),
-        ('AdaBoost', AdaBoostRegressor(random_state=args.seed)),
-        ('Support Vector Regression', SVR()),
-        ('Gaussian Process', GaussianProcessRegressor()),
+        #('Lasso Regression', Lasso()),
+        #('ElasticNet Regression', ElasticNet()),
+        #('Bayesian Ridge Regression', BayesianRidge()),
+        #('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=args.seed)),
+        #('Decision Tree', DecisionTreeRegressor(random_state=args.seed)),
+        #('Random Forest', RandomForestRegressor(random_state=args.seed)),
+        #('Gradient Boosting', GradientBoostingRegressor(random_state=args.seed)),
+        #('AdaBoost', AdaBoostRegressor(random_state=args.seed)),
+        #('Support Vector Regression', SVR()),
+        #('Gaussian Process', GaussianProcessRegressor()),
         
     ]
 
