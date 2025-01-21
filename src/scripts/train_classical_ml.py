@@ -46,10 +46,16 @@ def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Training Script for Evaluating Multiple Regression Models.')
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
-    parser.add_argument('--encoder', type=str, choices=['LabelEncoder', 'OneHotEncoder'], default='OneHotEncoder', 
-        help='The type of categorical encoder to use.')
+    parser.add_argument('--encoder', type=str, choices=['LabelEncoder', 'OneHotEncoder', 'EmbeddingEncoder'], 
+                    default='OneHotEncoder', help='The type of categorical encoder to use.')
+    parser.add_argument('--model_path', type=str, default=None, help='Path to the pretrained model checkpoint (only required for EmbeddingEncoder).')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
+    parser.add_argument('--save_path', type=str, default=None, help='Path to save the evaluation results as a CSV file.')
     args = parser.parse_args()
+
+    # Ensure model_path is provided if encoder is EmbeddingEncoder
+    if args.encoder == 'EmbeddingEncoder' and not args.model_path:
+        parser.error("--model_path is required when --encoder is set to 'EmbeddingEncoder'.")
 
 
     # Suppress convergence warnings for cleaner output
@@ -78,21 +84,29 @@ def main():
     datasets = split_dataset(full_dataset_df)
 
     # Define the list of regression models to evaluate
+    np.random.seed(args.seed)
     models = [
-        ('XGBRegressor', XGBRegressor(seed=args.seed)),
-        ('Linear Regression', LinearRegression()),
-        ('Ridge Regression', Ridge()),
-        ('Lasso Regression', Lasso()),
-        ('ElasticNet Regression', ElasticNet()),
-        ('Bayesian Ridge Regression', BayesianRidge()),
-        ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=args.seed)),
-        ('Decision Tree', DecisionTreeRegressor(random_state=args.seed)),
-        ('Random Forest', RandomForestRegressor(random_state=args.seed)),
-        ('Gradient Boosting', GradientBoostingRegressor(random_state=args.seed)),
-        ('AdaBoost', AdaBoostRegressor(random_state=args.seed)),
-        ('Support Vector Regression', SVR()),
-        ('Gaussian Process', GaussianProcessRegressor()),
-        
+    # Linear Models
+    ('Linear Regression', LinearRegression()),
+    ('Ridge Regression', Ridge()),
+    ('Lasso Regression', Lasso()),
+    ('ElasticNet Regression', ElasticNet()),
+    ('Bayesian Ridge Regression', BayesianRidge()),
+    ('Stochastic Gradient Descent', SGDRegressor(max_iter=1000, tol=1e-3, random_state=args.seed)),
+    
+    # Tree-based Models
+    ('Decision Tree', DecisionTreeRegressor(random_state=args.seed)),
+    ('Random Forest', RandomForestRegressor(random_state=args.seed)),
+    ('Extra Trees', ExtraTreesRegressor(random_state=args.seed)),
+    
+    # Boosting Models
+    ('AdaBoost', AdaBoostRegressor(random_state=args.seed)),
+    ('Gradient Boosting', GradientBoostingRegressor(random_state=args.seed)),
+    ('XGBRegressor', XGBRegressor(random_state=args.seed)),
+    
+    # Kernel-based and Non-linear Models
+    ('Support Vector Regression', SVR()),
+    ('Gaussian Process', GaussianProcessRegressor())
     ]
 
     # Dictionary to store evaluation results
@@ -106,6 +120,7 @@ def main():
                 datasets=datasets,
                 model=model,
                 categorical_encoder=args.encoder, 
+                model_path=args.model_path,
                 verbose=False
             )
             evaluation_results[name] = eval_dict
@@ -135,10 +150,12 @@ def main():
         'LB WPC': lb_wpc_list
     })
 
-    # Sort the DataFrame based on the Leaderboard Weighted Pearson Correlation
-    evaluation_df = evaluation_df.sort_values(by='LB WPC', ascending=False)
+   
     print("Evaluation Results:")
     print(evaluation_df.reset_index(drop=True))
+    if args.save_path:
+        evaluation_df.to_csv(args.save_path, index=False)
+        print(f"Results saved to {args.save_path}")
 
 if __name__ == '__main__':
     main()

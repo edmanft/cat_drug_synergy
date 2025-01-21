@@ -1,0 +1,15 @@
+Model,LabelEncoder,OneHotEncoder,AutoInt,CategoryEmbedding,TabTransformer
+Linear Regression,0.095,0.270,0.264,0.230,0.226
+Ridge Regression,0.095,0.271,0.270,0.230,0.222
+Lasso Regression,0.103,0.103,0.105,0.196,0.101
+ElasticNet Regression,0.084,0.098,0.116,0.235,0.085
+Bayesian Ridge Regression,0.077,0.258,0.271,0.277,0.226
+Stochastic Gradient Descent,0.087,0.276,0.248,0.264,0.227
+Decision Tree,0.129,0.016,0.063,0.093,0.051
+Random Forest,0.231,0.240,0.275,0.268,0.277
+Extra Trees,0.166,0.215,0.284,0.280,0.294
+AdaBoost,0.072,0.113,0.217,0.136,0.201
+Gradient Boosting,0.154,0.226,0.207,0.245,0.205
+XGBRegressor,0.209,0.235,0.193,0.255,0.187
+Support Vector Regression,0.108,0.193,0.246,0.271,0.228
+Gaussian Process,0.106,0.101,0.148,0.099,0.145

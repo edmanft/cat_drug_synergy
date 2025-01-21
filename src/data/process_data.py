@@ -21,16 +21,31 @@ def load_dataset(
     drug_synergy_df = drug_synergy_df[drug_synergy_df['QA'] == 1]
     # Drop unnecessary columns
     drug_synergy_df.drop(columns=['Challenge', 'QA'], inplace=True)
+    # Check and remove duplicates
+    if drug_synergy_df.duplicated().sum() > 0:
+        print(f"Found {drug_synergy_df.duplicated().sum()} duplicate rows in drug_synergy_df. Removing them.")
+        drug_synergy_df.drop_duplicates(inplace=True)
 
     # Load cell lines data
     cell_lines_df = pd.read_csv(cell_lines_path)
-    # Drop the COSMIC ID column
-    cell_lines_df.drop(columns=['COSMIC ID'], inplace=True)
+    # Select only the AZ-DREAM cell lines
+    cell_lines_df = cell_lines_df[cell_lines_df['AZ-DREAM '] == 1]
+
+    # Drop the COSMIC ID and datasets columns
+    cell_lines_df.drop(columns=['COSMIC ID', 'AZ-DREAM ', "O\'Neil et al. 2016"], inplace=True)
+    # Check and remove duplicates
+    if cell_lines_df.duplicated().sum() > 0:
+        print(f"Found {cell_lines_df.duplicated().sum()} duplicate rows in cell_lines_df. Removing them.")
+        cell_lines_df.drop_duplicates(inplace=True)
 
     # Load drug portfolio data
     drug_portfolio_df = pd.read_csv(drug_portfolio_path, sep='\t')
     # Clean up data by removing unwanted columns
     drug_portfolio_df.drop(columns=['Drug name'], inplace=True)
+    # Check and remove duplicates
+    if drug_portfolio_df.duplicated().sum() > 0:
+        print(f"Found {drug_portfolio_df.duplicated().sum()} duplicate rows in drug_portfolio_df. Removing them.")
+        drug_portfolio_df.drop_duplicates(inplace=True)
 
     # Merge datasets to form a comprehensive dataset
     full_dataset_df = pd.merge(drug_synergy_df, cell_lines_df, on='Cell line name', how='left')
@@ -55,7 +70,7 @@ def load_dataset(
     ## Redundant with Compound A and Compound B
     full_dataset_df.drop(columns=['Challenge drug name_A', 'Challenge drug name_B'], inplace=True)
     
-     ## Redundant with GDSC tissue descriptor 2
+    ## Redundant with GDSC tissue descriptor 2
     full_dataset_df.drop(columns=['GDSC tissue descriptor 1', 'TCGA label'], inplace=True)
 
     # More than 20% missing values
@@ -76,9 +91,13 @@ def load_dataset(
     # Define columns that will not be used in training but are needed for future processing steps
     not_training_columns = ['Synergy score', 'Combination ID', 'Dataset']
 
-
     # Reorder the columns: categorical first, then numerical
     full_dataset_df = full_dataset_df[categorical_columns + numerical_columns + not_training_columns]
+
+    # Check and assert no duplicates in the final DataFrame
+    if full_dataset_df.duplicated().sum() > 0:
+        print(f"Found {full_dataset_df.duplicated().sum()} duplicate rows in the final full_dataset_df.")
+    assert full_dataset_df.duplicated().sum() == 0, "There are duplicates in the final dataset!"
 
     # Create a dictionary with column types and their indices
     column_type_dict = {
