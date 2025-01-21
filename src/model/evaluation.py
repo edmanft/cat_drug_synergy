@@ -1,18 +1,33 @@
+import time
 import numpy as np
+import random
 import pandas as pd
 from collections import Counter
 from typing import Union, List, Tuple, Dict, Any
 from scipy.stats import pearsonr
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import (
-    StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
-from sklearn.base import BaseEstimator
-from pytorch_tabnet.tab_model import TabNetRegressor
+    StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer, )
+from sklearn.base import BaseEstimator, TransformerMixin
+import torch
+from sklearn.exceptions import NotFittedError
+
+import pytorch_lightning as pl
+
+
 from pytorch_tabular import TabularModel
 from pytorch_tabular.config import DataConfig, TrainerConfig, OptimizerConfig, ModelConfig
+from pytorch_tabular.categorical_encoders import CategoricalEmbeddingTransformer
 
+# Suppress common warnings
+import logging
+import warnings
+logging.getLogger("pytorch_lightning").setLevel(logging.ERROR)
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=pd.errors.PerformanceWarning)
 
 def freeze_categorical_embeddings(model):
     """
@@ -90,10 +105,40 @@ def weighted_pearson(
 
     return weighted_pearson, pearson_weights_df
 
+
+class EmbeddingTransformer(BaseEstimator, TransformerMixin):
+    def __init__(self, model, categorical_features):
+        self.model = model
+        self.embedding_transformer = CategoricalEmbeddingTransformer(model)
+        self.categorical_features = categorical_features
+
+    def fit(self, X, y=None):
+        # No fitting required
+        return self
+
+    def transform(self, X):
+        # Check if the model and transformer are correctly initialized
+        if not hasattr(self.embedding_transformer, '_mapping'):
+            raise NotFittedError("The CategoricalEmbeddingTransformer is not fitted yet.")
+        
+        # Ensure that X contains the required categorical features
+        missing_cols = set(self.categorical_features) - set(X.columns)
+        if missing_cols:
+            raise ValueError(f"Missing categorical columns in input data: {missing_cols}")
+
+        # Transform the categorical features into embeddings
+        X_transformed = self.embedding_transformer.transform(X[self.categorical_features])
+        # Extract the embedding columns
+        embedding_cols = [col for col in X_transformed.columns if '_embed_dim_' in col]
+        # Return the embeddings as a numpy array
+        return X_transformed[embedding_cols].values
+
+
 def train_evaluate_sklearn_pipeline(
     datasets: Dict[str, Dict[str, Any]],
     model: BaseEstimator,
     categorical_encoder: str = 'OneHotEncoder',
+    model_path: str = None,
     verbose: bool = True
 ) -> Dict[str, Dict[str, Any]]:
     """
@@ -109,9 +154,11 @@ def train_evaluate_sklearn_pipeline(
             - 'comb_id': pandas.Series of combination IDs.
     model : sklearn.base.BaseEstimator
         The machine learning model to be trained.
-    categorical_encoder: str, optional
-        'OneHotEncoder' or 'LabelEncoder'. Determines which encoder to use for categorical features.
+    categorical_encoder : str, optional
+        'OneHotEncoder', 'LabelEncoder', or 'EmbeddingEncoder'. Determines which encoder to use for categorical features.
         Default is 'OneHotEncoder'.
+    model_path : str, optional
+        Path to the pretrained model checkpoint, required if categorical_encoder is 'EmbeddingEncoder'.
     verbose : bool, optional
         If True, prints out the list of categorical and continuous features. Default is True.
 
@@ -128,7 +175,7 @@ def train_evaluate_sklearn_pipeline(
     y_train = datasets['train']['y']
     train_comb_id = datasets['train']['comb_id']
 
-    # Identify categorical and continuous features
+    
     categorical_features = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
     continuous_features = X_train.select_dtypes(include=['number']).columns.tolist()
 
@@ -137,39 +184,61 @@ def train_evaluate_sklearn_pipeline(
         print("Continuous features:", continuous_features)
 
     # Preprocessing pipelines for numeric and categorical features
-    
-
-    numeric_transformer = Pipeline(steps=[
+    numeric_pipeline = Pipeline(steps=[
+        ('selector', FunctionTransformer(lambda X: X[continuous_features], validate=False)),
         ('imputer', SimpleImputer(strategy='median')),
         ('scaler', StandardScaler())
     ])
 
     # Choose the categorical transformer based on 'categorical_encoder'
     if categorical_encoder == 'LabelEncoder':
-        # Use OrdinalEncoder for features
-        categorical_transformer = Pipeline(steps=[
+        categorical_pipeline = Pipeline(steps=[
+            ('selector', FunctionTransformer(lambda X: X[categorical_features], validate=False)),
             ('imputer', SimpleImputer(strategy='most_frequent')),
             ('ordinal', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1))
         ])
+
+        preprocessor = FeatureUnion(transformer_list=[
+            ('num', numeric_pipeline),
+            ('cat', categorical_pipeline)
+        ])
+
     elif categorical_encoder == 'OneHotEncoder':
-        # Use OneHotEncoder
-        categorical_transformer = Pipeline(steps=[
+        categorical_pipeline = Pipeline(steps=[
+            ('selector', FunctionTransformer(lambda X: X[categorical_features], validate=False)),
             ('imputer', SimpleImputer(strategy='most_frequent')),
             ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
         ])
-    else:
-        raise ValueError(f"Invalid categorical_encoder: {categorical_encoder}. Choose 'OneHotEncoder' or 'LabelEncoder'.")
 
-
-
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ('num', numeric_transformer, continuous_features),
-            ('cat', categorical_transformer, categorical_features)
+        preprocessor = FeatureUnion(transformer_list=[
+            ('num', numeric_pipeline),
+            ('cat', categorical_pipeline)
         ])
 
+    elif categorical_encoder == 'EmbeddingEncoder':
+        # Ensure the categorical features in the data match those in the model
+        missing_cols = set(categorical_features) - set(X_train.columns)
+        if missing_cols:
+            raise ValueError(f"Missing categorical columns in input data: {missing_cols}")
 
+        # Create the EmbeddingTransformer
+        tabular_model = TabularModel.load_model(model_path, map_location=torch.device("cpu"))
+        embedding_transformer = EmbeddingTransformer(tabular_model, categorical_features)
 
+        embedding_pipeline = Pipeline(steps=[
+            ('selector', FunctionTransformer(lambda X: X[categorical_features], validate=False)),
+            ('embedding_transformer', embedding_transformer)
+        ])
+
+        preprocessor = FeatureUnion(transformer_list=[
+            ('num', numeric_pipeline),
+            ('embedding', embedding_pipeline)
+        ])
+
+    else:
+        raise ValueError(f"Invalid categorical_encoder: {categorical_encoder}. Choose 'OneHotEncoder', 'LabelEncoder', or 'EmbeddingEncoder'.")
+
+    # Create the full pipeline
     model_pipeline = Pipeline(steps=[
         ('preprocessor', preprocessor),
         ('model', model)
@@ -185,6 +254,12 @@ def train_evaluate_sklearn_pipeline(
         X = data['X']
         y_true = data['y']
         comb_id = data['comb_id']
+
+        # Ensure the dataset contains the required features
+        if categorical_encoder == 'EmbeddingEncoder':
+            missing_cols = set(categorical_features + continuous_features) - set(X.columns)
+            if missing_cols:
+                raise ValueError(f"Missing columns in {split_name} data: {missing_cols}")
 
         # Make predictions
         y_pred = model_pipeline.predict(X)
@@ -207,6 +282,7 @@ def train_evaluate_pytorch_tabular_pipeline(
     trainer_config: TrainerConfig,
     optimizer_config: OptimizerConfig = None,
     verbose: bool = True, 
+    seed: int = 42, 
 ) -> Dict[str, Dict[str, Any]]:
     """
     Trains a PyTorch Tabular model using the provided configurations and datasets,
@@ -238,6 +314,15 @@ def train_evaluate_pytorch_tabular_pipeline(
             - 'wpc': float, weighted Pearson correlation coefficient.
             - 'pear_weights': pandas.DataFrame, individual Pearson coefficients for each combination.
     """
+    # Set the random seed for reproducibility
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    pl.seed_everything(seed, workers=True) 
 
     if optimizer_config is None:
         optimizer_config = OptimizerConfig()
@@ -261,11 +346,14 @@ def train_evaluate_pytorch_tabular_pipeline(
         model_config=model_config,
         optimizer_config=optimizer_config,
         trainer_config=trainer_config,
+        seed = seed
     )
-
+    
+    start_time = time.time()  # Start timing
 
     # Train the model (no need to specify validation data, handled by `validation_split`)
     tabular_model.fit(train=train_df, validation=test_df)
+    training_time = time.time() - start_time
 
     # Dictionary to store evaluation results
     evaluation_dict = {}
@@ -292,4 +380,4 @@ def train_evaluate_pytorch_tabular_pipeline(
             'pear_weights': pear_weights_df
         }
 
-    return evaluation_dict, tabular_model
+    return evaluation_dict, tabular_model, training_time

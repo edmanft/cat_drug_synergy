@@ -15,6 +15,7 @@ Ensure that the dataset paths are correctly specified before running the script.
 """
 
 import os
+import random
 import argparse
 import numpy as np
 import pandas as pd
@@ -26,6 +27,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+
+import pytorch_lightning as pl
 
 from pytorch_tabular import TabularModel
 from pytorch_tabular.config import DataConfig, OptimizerConfig, TrainerConfig
@@ -62,9 +65,21 @@ def main():
     parser.add_argument('--es_patience', type=int, default=30, help='Early stopping patience')
     parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
-    parser.add_argument('--save_path', type=str, default=None, help='Directory where the models will be saved. If not provided, models will not be saved.')
+    parser.add_argument('--model_dir', type=str, default=None, help='Directory where the models will be saved. If not provided, models will not be saved.')
+    parser.add_argument('--save_path', type=str, default=None, help='Path to save the evaluation results as a CSV file.')
     parser.add_argument('--verbose', action='store_true', help='Print detailed output.')
     args = parser.parse_args()
+
+    # Set the random seed for reproducibility
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    pl.seed_everything(args.seed, workers=True)
+
 
     # Suppress convergence warnings for cleaner output
     warnings.filterwarnings("ignore", category=ConvergenceWarning)
@@ -126,7 +141,7 @@ def main():
 
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
-        ('TabNet', TabNetModelConfig),
+        #('TabNet', TabNetModelConfig),
         ('CategoryEmbedding', CategoryEmbeddingModelConfig),
         #('Node', NodeConfig),
         ('AutoInt', AutoIntConfig),
@@ -163,25 +178,32 @@ def main():
                 devices=1 if torch.cuda.is_available() else None,  # Number of devices (GPUs/CPUs)
                 early_stopping="valid_loss",
                 early_stopping_patience=args.es_patience,
+                seed=args.seed,
+                deterministic=True,
+            
             )
 
-            # Call the training and evaluation pipeline
-            eval_dict, trained_model = train_evaluate_pytorch_tabular_pipeline(
+        
+            eval_dict, trained_model, training_time = train_evaluate_pytorch_tabular_pipeline(
                 datasets=datasets,
                 data_config=data_config,
                 model_config=model_config,
                 trainer_config=trainer_config,
-                verbose=args.verbose
+                verbose=args.verbose, 
+                seed = args.seed
             )
+
+
             
 
             evaluation_results[model_name] = eval_dict
+            print(f"{model_name} - Training Time: {training_time:.2f} seconds")
             print(f"{model_name} - Train Weighted Pearson Correlation: {eval_dict['train']['wpc']:.4f}")
             print(f"{model_name} - Test Weighted Pearson Correlation: {eval_dict['test']['wpc']:.4f}")
             print(f"{model_name} - LB Weighted Pearson Correlation: {eval_dict['lb']['wpc']:.4f}\n")
 
-            if args.save_path is not None:
-                model_save_path = os.path.join(args.save_path, f"{model_name}_model.ckpt")
+            if args.model_dir is not None:
+                model_save_path = os.path.join(args.model_dir, f"{model_name}_model.ckpt")
                 trained_model.save_model(model_save_path)
                 if args.verbose:
                     print(f"Model saved to: {model_save_path}")
@@ -207,13 +229,16 @@ def main():
         'Model': model_list,
         'Train WPC': train_wpc_list,
         'Test WPC': test_wpc_list,
-        'LB WPC': lb_wpc_list
+        'LB WPC': lb_wpc_list,  
     })
 
     # Sort the DataFrame based on the Leaderboard Weighted Pearson Correlation
     evaluation_df = evaluation_df.sort_values(by='LB WPC', ascending=False)
     print("Evaluation Results:")
     print(evaluation_df.reset_index(drop=True))
+    if args.save_path:
+        evaluation_df.to_csv(args.save_path, index=False)
+        print(f"Results saved to {args.save_path}")
 
 if __name__ == '__main__':
     main()

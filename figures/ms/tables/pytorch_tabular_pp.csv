@@ -1,0 +1,5 @@
+Model,LB WPC
+TabTransformer,0.269
+CategoryEmbedding,0.260
+AutoInt,0.258
+TabNet,0.078
