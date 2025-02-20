@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
+from rdkit import Chem
+from rdkit.Chem import rdFingerprintGenerator
 from collections import Counter
 from typing import Union, List, Tuple, Dict, Any
 from scipy.stats import pearsonr
@@ -10,10 +13,32 @@ from sklearn.preprocessing import (
     StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
 from sklearn.base import BaseEstimator
 
+def smiles_to_morgan_fp(smiles_df, radius=4,fpSize=2048):
+    morgan_fp_dict = {}
+    fail_count = 0
+    for i in tqdm(range(len(smiles_df))):
+        drug_name = smiles_df.iloc[i]['Challenge drug name']
+        smiles = smiles_df.iloc[i]['SMILES']
+        
+        try: 
+            mol = Chem.MolFromSmiles(smiles)
+            morgan_fp = rdFingerprintGenerator.GetMorganGenerator(radius=radius, fpSize=fpSize)
+            morgan_fp = morgan_fp.GetFingerprint(mol)
+            morgan_fp = np.array(morgan_fp)
+            morgan_fp_dict[drug_name] = morgan_fp
+        except: # save numpy arrays of nans
+            morgan_fp_dict[drug_name] = np.full(fpSize, 0)
+            fail_count += 1
+    print(f"Failed to convert {fail_count}/{len(smiles_df)} SMILES strings to Morgan fingerprints")
+    print(f"Setting them to all-zero arrays")
+            
+    return morgan_fp_dict
+
 def load_dataset(
     drug_syn_path: str,
     cell_lines_path: str,
-    drug_portfolio_path: str
+    drug_portfolio_path: str, 
+    smiles_path: str|None = None
 ) -> pd.DataFrame:
     # Load drug combinations data
     drug_synergy_df = pd.read_csv(drug_syn_path)
@@ -25,6 +50,7 @@ def load_dataset(
     if drug_synergy_df.duplicated().sum() > 0:
         print(f"Found {drug_synergy_df.duplicated().sum()} duplicate rows in drug_synergy_df. Removing them.")
         drug_synergy_df.drop_duplicates(inplace=True)
+    
 
     # Load cell lines data
     cell_lines_df = pd.read_csv(cell_lines_path)
@@ -73,10 +99,27 @@ def load_dataset(
     ## Redundant with GDSC tissue descriptor 2
     full_dataset_df.drop(columns=['GDSC tissue descriptor 1', 'TCGA label'], inplace=True)
 
+
+
     # More than 20% missing values
     full_dataset_df.drop(columns=['HBA_A', 'HBD_A', 'Molecular weight_A', 'cLogP_A', 'Lipinski_A',
        'SMILES_A', 'HBA_B', 'HBD_B', 'Molecular weight_B', 'cLogP_B',
        'Lipinski_B', 'SMILES_B'], inplace=True)
+    
+    if smiles_path is not None:
+        smiles_fp_df = pd.read_csv(smiles_path, delimiter='\t')
+        fpSize=2048
+        morgan_fp_dict = smiles_to_morgan_fp(smiles_fp_df, radius=4, fpSize=fpSize)
+        full_dataset_df.copy()
+        fp_columns_a = [f'MorganFP_A_{i}' for i in range(fpSize)]
+        fp_columns_b = [f'MorganFP_B_{i}' for i in range(fpSize)]
+
+        full_dataset_df[fp_columns_a] = full_dataset_df['Compound A'].map(morgan_fp_dict).apply(pd.Series)
+        full_dataset_df[fp_columns_b] = full_dataset_df['Compound B'].map(morgan_fp_dict).apply(pd.Series)
+
+    else:
+        print("No SMILES fingerprints provided. Skipping the step.")
+        
 
     # Define categorical and numerical columns
     categorical_columns = [
@@ -88,6 +131,9 @@ def load_dataset(
         'Max. conc. A', 'IC50 A', 'H A', 'Einf A', 
         'Max. conc. B', 'IC50 B', 'H B', 'Einf B'
     ]
+    if smiles_path is not None:
+        numerical_columns += fp_columns_a + fp_columns_b
+
     # Define columns that will not be used in training but are needed for future processing steps
     not_training_columns = ['Synergy score', 'Combination ID', 'Dataset']
 
