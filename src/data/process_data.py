@@ -38,7 +38,8 @@ def load_dataset(
     drug_syn_path: str,
     cell_lines_path: str,
     drug_portfolio_path: str, 
-    smiles_path: str|None = None
+    smiles_path: str|None = None, 
+    fpSize: int = 2048
 ) -> pd.DataFrame:
     # Load drug combinations data
     drug_synergy_df = pd.read_csv(drug_syn_path)
@@ -108,7 +109,6 @@ def load_dataset(
     
     if smiles_path is not None:
         smiles_fp_df = pd.read_csv(smiles_path, delimiter='\t')
-        fpSize=2048
         morgan_fp_dict = smiles_to_morgan_fp(smiles_fp_df, radius=4, fpSize=fpSize)
         full_dataset_df.copy()
         fp_columns_a = [f'MorganFP_A_{i}' for i in range(fpSize)]

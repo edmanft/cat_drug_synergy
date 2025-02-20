@@ -48,6 +48,8 @@ def main():
     parser.add_argument('--data_path', type=str, required=True, help='Path to the directory containing data files.')
     parser.add_argument('--encoder', type=str, choices=['LabelEncoder', 'OneHotEncoder', 'EmbeddingEncoder'], 
                     default='OneHotEncoder', help='The type of categorical encoder to use.')
+    parser.add_argument('--morgan_fp', action='store_true', help='Whether to use Morgan fingerprints as features.')
+    parser.add_argument('--fpSize', type=int, default=2048, help='The size of the Morgan fingerprints.')
     parser.add_argument('--model_path', type=str, default=None, help='Path to the pretrained model checkpoint (only required for EmbeddingEncoder).')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the evaluation results as a CSV file.')
@@ -77,8 +79,19 @@ def main():
         print(f"Drug portfolio file not found at {drug_portfolio_path}")
         exit(1)
 
-    # Load and process the dataset
-    full_dataset_df, _ = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
+    if args.morgan_fp:
+        smiles_path = os.path.join(args.data_path, 'drug_portfolio_smiles.csv')
+        if not os.path.exists(smiles_path):
+            print(f"Drug SMILES file not found at {smiles_path}")
+            exit(1)
+        
+        # Load and process the dataset
+        full_dataset_df, _ = load_dataset(drug_syn_path, cell_lines_path, 
+                                          drug_portfolio_path, smiles_path=smiles_path, 
+                                          fpSize=args.fpSize)
+    else:
+        # Load and process the dataset
+        full_dataset_df, _ = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
