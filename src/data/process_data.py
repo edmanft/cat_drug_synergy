@@ -13,7 +13,12 @@ from sklearn.preprocessing import (
     StandardScaler, OneHotEncoder, OrdinalEncoder, FunctionTransformer)
 from sklearn.base import BaseEstimator
 
-def smiles_to_morgan_fp(smiles_df, radius=4,fpSize=2048):
+def smiles_to_morgan_fp(smiles_df, radius=2,fpSize=2048, fill_strategy='nan') -> Dict[str, np.ndarray]:
+    """
+    Convert SMILES strings to Morgan fingerprints using RDKit.
+    """
+
+
     morgan_fp_dict = {}
     fail_count = 0
     for i in tqdm(range(len(smiles_df))):
@@ -26,11 +31,17 @@ def smiles_to_morgan_fp(smiles_df, radius=4,fpSize=2048):
             morgan_fp = morgan_fp.GetFingerprint(mol)
             morgan_fp = np.array(morgan_fp)
             morgan_fp_dict[drug_name] = morgan_fp
-        except: # save numpy arrays of nans
-            morgan_fp_dict[drug_name] = np.full(fpSize, 0)
+        except: 
+            if fill_strategy == 'zeros':
+                morgan_fp_dict[drug_name] = np.full(fpSize, 0)
+            if fill_strategy == 'nan':
+                morgan_fp_dict[drug_name] = np.full(fpSize, np.nan)
             fail_count += 1
     print(f"Failed to convert {fail_count}/{len(smiles_df)} SMILES strings to Morgan fingerprints")
-    print(f"Setting them to all-zero arrays")
+    if fill_strategy == 'zeros':
+        print(f"Setting them to all-zero arrays")
+    if fill_strategy == 'nan':
+        print(f"Setting them to arrays with NaN values")
             
     return morgan_fp_dict
 
@@ -39,7 +50,8 @@ def load_dataset(
     cell_lines_path: str,
     drug_portfolio_path: str, 
     smiles_path: str|None = None, 
-    fpSize: int = 2048
+    fpSize: int = 2048,
+    fill_strategy: str|None = 'nan'
 ) -> pd.DataFrame:
     # Load drug combinations data
     drug_synergy_df = pd.read_csv(drug_syn_path)
@@ -109,13 +121,17 @@ def load_dataset(
     
     if smiles_path is not None:
         smiles_fp_df = pd.read_csv(smiles_path, delimiter='\t')
-        morgan_fp_dict = smiles_to_morgan_fp(smiles_fp_df, radius=4, fpSize=fpSize)
+        morgan_fp_dict = smiles_to_morgan_fp(smiles_fp_df, radius=4, fpSize=fpSize, fill_strategy=fill_strategy)
         full_dataset_df.copy()
         fp_columns_a = [f'MorganFP_A_{i}' for i in range(fpSize)]
         fp_columns_b = [f'MorganFP_B_{i}' for i in range(fpSize)]
 
         full_dataset_df[fp_columns_a] = full_dataset_df['Compound A'].map(morgan_fp_dict).apply(pd.Series)
         full_dataset_df[fp_columns_b] = full_dataset_df['Compound B'].map(morgan_fp_dict).apply(pd.Series)
+        # drop nan rows from full_dataset_df and say how many where droped
+        print(f"Dropped {len(full_dataset_df) - len(full_dataset_df.dropna(subset=fp_columns_a+fp_columns_b))} rows with missing fingerprints")
+        full_dataset_df.dropna(subset=fp_columns_a+fp_columns_b, inplace=True)
+        
 
     else:
         print("No SMILES fingerprints provided. Skipping the step.")

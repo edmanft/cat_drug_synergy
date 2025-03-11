@@ -64,6 +64,9 @@ def main():
     parser.add_argument('--max_epoch', type=int, default=200, help='Maximum number of training epochs.')
     parser.add_argument('--es_patience', type=int, default=30, help='Early stopping patience')
     parser.add_argument('--no_embedding', action='store_true', help='Use OneHotEncoding instead of embeddings for categorical variables.')
+    parser.add_argument('--morgan_fp', action='store_true', help='Whether to use Morgan fingerprints as features.')
+    parser.add_argument('--fpSize', type=int, default=2048, help='The size of the Morgan fingerprints.')
+    parser.add_argument('--fill_strategy', type=str, default='nan', help='Strategy to fill SMILES.')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--model_dir', type=str, default=None, help='Directory where the models will be saved. If not provided, models will not be saved.')
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the evaluation results as a CSV file.')
@@ -99,9 +102,22 @@ def main():
     if not os.path.exists(drug_portfolio_path):
         print(f"Drug portfolio file not found at {drug_portfolio_path}")
         exit(1)
+    
+    if args.morgan_fp:
+        smiles_path = os.path.join(args.data_path, 'drug_portfolio_smiles.csv')
+        if not os.path.exists(smiles_path):
+            print(f"Drug SMILES file not found at {smiles_path}")
+            exit(1)
+        
+        # Load and process the dataset
+        full_dataset_df, column_type_dict = load_dataset(drug_syn_path, cell_lines_path, 
+                                          drug_portfolio_path, smiles_path=smiles_path, 
+                                          fpSize=args.fpSize, fill_strategy=args.fill_strategy)
+    else:
+        # Load and process the dataset
+        full_dataset_df, column_type_dict = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
 
-    # Load and process the dataset
-    full_dataset_df, column_type_dict = load_dataset(drug_syn_path, cell_lines_path, drug_portfolio_path)
+    
 
     # Split the dataset into training, testing, and leaderboard sets
     datasets = split_dataset(full_dataset_df)
@@ -142,11 +158,11 @@ def main():
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         #('TabNet', TabNetModelConfig),
-        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
         #('Node', NodeConfig),
         ('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
-        ('TabTransformer', TabTransformerConfig),
+        #('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results
