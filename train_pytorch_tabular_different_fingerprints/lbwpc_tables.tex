@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\begin{table}[h!]
+\centering
+\caption{LB WPC results for CategoryEmbedding across batch sizes and fingerprint settings.}
+\label{tab:lbwpc_categoryembedding}
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{5}{c}{Batch size} \\
+\cmidrule(lr){2-6}
+Fingerprint & 32 & 64 & 128 & 256 & 512 \\
+\midrule
+No fingerprints & 0.185 & 0.177 & 0.148 & 0.161 & \textbf{0.194} \\
+Morgan 1024 bits & \textbf{0.206} & 0.185 & 0.164 & 0.151 & 0.119 \\
+Morgan 2048 bits & 0.022 & \textbf{0.114} & 0.093 & 0.062 & 0.071 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{LB WPC results for AutoInt across batch sizes and fingerprint settings.}
+\label{tab:lbwpc_autoint}
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{5}{c}{Batch size} \\
+\cmidrule(lr){2-6}
+Fingerprint & 32 & 64 & 128 & 256 & 512 \\
+\midrule
+No fingerprints & 0.258 & 0.275 & 0.266 & \textbf{0.281} & 0.276 \\
+Morgan 1024 bits & - & - & - & - & - \\
+Morgan 2048 bits & - & - & - & - & - \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{LB WPC results for TabTransformer across batch sizes and fingerprint settings.}
+\label{tab:lbwpc_tabtransformer}
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{5}{c}{Batch size} \\
+\cmidrule(lr){2-6}
+Fingerprint & 32 & 64 & 128 & 256 & 512 \\
+\midrule
+No fingerprints & 0.211 & \textbf{0.240} & 0.202 & 0.168 & 0.148 \\
+Morgan 1024 bits & \textbf{0.228} & 0.175 & 0.143 & 0.209 & 0.199 \\
+Morgan 2048 bits & 0.115 & 0.164 & 0.134 & \textbf{0.183} & 0.142 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

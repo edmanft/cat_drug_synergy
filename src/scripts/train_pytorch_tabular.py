@@ -158,11 +158,11 @@ def main():
     # Define the list of PyTorch Tabular models to evaluate
     model_configs = [
         #('TabNet', TabNetModelConfig),
-        #('CategoryEmbedding', CategoryEmbeddingModelConfig),
+        ('CategoryEmbedding', CategoryEmbeddingModelConfig),
         #('Node', NodeConfig),
-        ('AutoInt', AutoIntConfig),
+        #('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
-        #('TabTransformer', TabTransformerConfig),
+        ('TabTransformer', TabTransformerConfig),
     ]
 
     # Dictionary to store evaluation results

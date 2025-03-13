@@ -25,7 +25,11 @@ def smiles_to_morgan_fp(smiles_df, radius=2,fpSize=2048, fill_strategy='nan') ->
         drug_name = smiles_df.iloc[i]['Challenge drug name']
         smiles = smiles_df.iloc[i]['SMILES']
         
-        try: 
+        try:
+            # If SMILES includes a ; character, only take the first part
+            if ';' in smiles:
+                smiles = smiles.split(';')[0]
+                 
             mol = Chem.MolFromSmiles(smiles)
             morgan_fp = rdFingerprintGenerator.GetMorganGenerator(radius=radius, fpSize=fpSize)
             morgan_fp = morgan_fp.GetFingerprint(mol)
