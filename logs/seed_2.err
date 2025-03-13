@@ -1,0 +1,8 @@
+  0%|          | 0/118 [00:00<?, ?it/s][14:59:54] SMILES Parse Error: syntax error while parsing: Antibody
+[14:59:54] SMILES Parse Error: check for mistakes around position 1:
+[14:59:54] Antibody
+[14:59:54] ^
+[14:59:54] SMILES Parse Error: Failed parsing SMILES 'Antibody' for input: 'Antibody'
+ 67%|██████▋   | 79/118 [00:00<00:00, 786.97it/s]100%|██████████| 118/118 [00:00<00:00, 831.03it/s]
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])

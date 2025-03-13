@@ -1,0 +1,203 @@
+==> Running PyTorch Tabular for seed 9
+Failed to convert 17/118 SMILES strings to Morgan fingerprints
+Setting them to arrays with NaN values
+Dropped 726 rows with missing fingerprints
+Training and evaluating Linear Regression...
+2025-03-13 15:07:36,777 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:36,785 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Linear Regression - Train Weighted Pearson Correlation: 0.3130
+Linear Regression - Test Weighted Pearson Correlation: 0.2093
+Linear Regression - LB Weighted Pearson Correlation: 0.1610
+
+Training and evaluating Ridge Regression...
+2025-03-13 15:07:41,468 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:41,472 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Ridge Regression - Train Weighted Pearson Correlation: 0.3136
+Ridge Regression - Test Weighted Pearson Correlation: 0.2098
+Ridge Regression - LB Weighted Pearson Correlation: 0.1669
+
+Training and evaluating Lasso Regression...
+2025-03-13 15:07:45,823 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:45,826 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Lasso Regression - Train Weighted Pearson Correlation: 0.1407
+Lasso Regression - Test Weighted Pearson Correlation: 0.1460
+Lasso Regression - LB Weighted Pearson Correlation: 0.1326
+
+Training and evaluating ElasticNet Regression...
+2025-03-13 15:07:49,926 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:49,930 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+ElasticNet Regression - Train Weighted Pearson Correlation: 0.1669
+ElasticNet Regression - Test Weighted Pearson Correlation: 0.1720
+ElasticNet Regression - LB Weighted Pearson Correlation: 0.1361
+
+Training and evaluating Bayesian Ridge Regression...
+2025-03-13 15:07:54,192 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:54,196 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Bayesian Ridge Regression - Train Weighted Pearson Correlation: 0.1808
+Bayesian Ridge Regression - Test Weighted Pearson Correlation: 0.1868
+Bayesian Ridge Regression - LB Weighted Pearson Correlation: 0.1402
+
+Training and evaluating Stochastic Gradient Descent...
+2025-03-13 15:07:59,297 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:07:59,304 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Stochastic Gradient Descent - Train Weighted Pearson Correlation: -0.0851
+Stochastic Gradient Descent - Test Weighted Pearson Correlation: -0.1557
+Stochastic Gradient Descent - LB Weighted Pearson Correlation: -0.0389
+
+Training and evaluating Decision Tree...
+2025-03-13 15:08:03,678 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:08:03,682 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Decision Tree - Train Weighted Pearson Correlation: 1.0000
+Decision Tree - Test Weighted Pearson Correlation: 0.1220
+Decision Tree - LB Weighted Pearson Correlation: 0.0891
+
+Training and evaluating Random Forest...
+2025-03-13 15:08:07,791 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:08:07,795 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Random Forest - Train Weighted Pearson Correlation: 0.9673
+Random Forest - Test Weighted Pearson Correlation: 0.2679
+Random Forest - LB Weighted Pearson Correlation: 0.2503
+
+Training and evaluating Extra Trees...
+2025-03-13 15:08:32,637 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:08:32,641 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Extra Trees - Train Weighted Pearson Correlation: 1.0000
+Extra Trees - Test Weighted Pearson Correlation: 0.2557
+Extra Trees - LB Weighted Pearson Correlation: 0.2199
+
+Training and evaluating AdaBoost...
+2025-03-13 15:08:59,834 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:08:59,839 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+AdaBoost - Train Weighted Pearson Correlation: 0.3071
+AdaBoost - Test Weighted Pearson Correlation: 0.1643
+AdaBoost - LB Weighted Pearson Correlation: 0.0772
+
+Training and evaluating Gradient Boosting...
+2025-03-13 15:09:07,311 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:09:07,315 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Gradient Boosting - Train Weighted Pearson Correlation: 0.6925
+Gradient Boosting - Test Weighted Pearson Correlation: 0.2718
+Gradient Boosting - LB Weighted Pearson Correlation: 0.1833
+
+Training and evaluating XGBRegressor...
+2025-03-13 15:09:15,129 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:09:15,133 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+XGBRegressor - Train Weighted Pearson Correlation: 0.9987
+XGBRegressor - Test Weighted Pearson Correlation: 0.2400
+XGBRegressor - LB Weighted Pearson Correlation: 0.1604
+
+Training and evaluating Support Vector Regression...
+2025-03-13 15:09:19,515 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:09:19,518 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Support Vector Regression - Train Weighted Pearson Correlation: 0.2118
+Support Vector Regression - Test Weighted Pearson Correlation: 0.1380
+Support Vector Regression - LB Weighted Pearson Correlation: 0.1397
+
+Training and evaluating Gaussian Process...
+2025-03-13 15:09:30,002 - {pytorch_tabular.tabular_model:167} - INFO -          
+Experiment Tracking is turned off                                               
+2025-03-13 15:09:30,006 - {pytorch_tabular.tabular_model:342} - INFO - Preparing
+the Trainer                                                                     
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Encoding the data... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+Gaussian Process - Train Weighted Pearson Correlation: 1.0000
+Gaussian Process - Test Weighted Pearson Correlation: 0.1101
+Gaussian Process - LB Weighted Pearson Correlation: 0.0729
+
+Evaluation Results:
+                          Model  Train WPC  Test WPC    LB WPC
+0             Linear Regression   0.313037  0.209334  0.161042
+1              Ridge Regression   0.313575  0.209820  0.166886
+2              Lasso Regression   0.140746  0.146002  0.132558
+3         ElasticNet Regression   0.166932  0.172012  0.136115
+4     Bayesian Ridge Regression   0.180778  0.186774  0.140153
+5   Stochastic Gradient Descent  -0.085109 -0.155711 -0.038898
+6                 Decision Tree   1.000000  0.121981  0.089081
+7                 Random Forest   0.967322  0.267862  0.250267
+8                   Extra Trees   1.000000  0.255721  0.219902
+9                      AdaBoost   0.307090  0.164311  0.077247
+10            Gradient Boosting   0.692542  0.271777  0.183274
+11                 XGBRegressor   0.998746  0.239976  0.160410
+12    Support Vector Regression   0.211807  0.138020  0.139655
+13             Gaussian Process   1.000000  0.110126  0.072927
+Results saved to benchmarks_embed_seeds_fingerprints_1024/sklearn_EmbeddingAutoInt_seed_9.csv

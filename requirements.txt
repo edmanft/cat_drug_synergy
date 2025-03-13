@@ -8,6 +8,7 @@ pytest
 pytorch-tabnet
 pytorch_tabular
 optuna
+rdkit
 seaborn
 scikit-learn
 xgboost
