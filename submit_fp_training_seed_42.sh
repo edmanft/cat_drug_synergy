@@ -14,8 +14,8 @@ source activate cat_drug_synergy
 seed=42
 
 data_path="data"
-model_dir="models_weights_fingerprints_1024/seed_${seed}"
-benchmark_dir="benchmarks_embed_seeds_fingerprints_1024"
+model_dir="models_weights_fingerprints_1024_drop_tautomers/seed_${seed}"
+benchmark_dir="benchmarks_embed_seeds_fingerprints_1024_drop_tautomers"
 mkdir -p "$benchmark_dir"
 
 echo "==> Running PyTorch Tabular for seed $seed"
@@ -66,5 +66,13 @@ python src/scripts/train_classical_ml.py \
     --seed $seed \
     --save_path "$benchmark_dir/sklearn_EmbeddingCategoryEmbedding_seed_${seed}.csv" &
 
+# AutoInt
+python src/scripts/train_classical_ml.py \
+    --data_path "$data_path" \
+    --encoder EmbeddingEncoder \
+    --model_path "$model_dir/AutoInt_model.ckpt" \
+    --morgan_fp --fpSize 1024 --fill_strategy nan \
+    --seed $seed \
+    --save_path "$benchmark_dir/sklearn_EmbeddingAutoInt_seed_${seed}.csv" &
 wait
 
