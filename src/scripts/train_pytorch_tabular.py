@@ -160,7 +160,7 @@ def main():
         #('TabNet', TabNetModelConfig),
         ('CategoryEmbedding', CategoryEmbeddingModelConfig),
         #('Node', NodeConfig),
-        #('AutoInt', AutoIntConfig),
+        ('AutoInt', AutoIntConfig),
         #('FTTransformer', FTTransformerConfig),
         ('TabTransformer', TabTransformerConfig),
     ]
