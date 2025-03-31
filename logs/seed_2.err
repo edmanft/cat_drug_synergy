@@ -1,0 +1,262 @@
+[rank: 0] Seed set to 2
+  0%|          | 0/118 [00:00<?, ?it/s][16:05:17] SMILES Parse Error: syntax error while parsing: Antibody
+[16:05:17] SMILES Parse Error: check for mistakes around position 1:
+[16:05:17] Antibody
+[16:05:17] ^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'Antibody' for input: 'Antibody'
+  2%|▏         | 2/118 [00:00<00:10, 11.30it/s][16:05:17] SMILES Parse Error: syntax error while parsing: CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4
+[16:05:17] SMILES Parse Error: check for mistakes around position 64:
+[16:05:17] CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4' for input: 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4'
+[16:05:17] SMILES Parse Error: syntax error while parsing: CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O
+[16:05:17] SMILES Parse Error: check for mistakes around position 74:
+[16:05:17] nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O' for input: 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+[16:05:17] SMILES Parse Error: syntax error while parsing: CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F
+[16:05:17] SMILES Parse Error: check for mistakes around position 67:
+[16:05:17] c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F' for input: 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F'
+ 35%|███▍      | 41/118 [00:00<00:00, 180.08it/s][16:05:17] SMILES Parse Error: syntax error while parsing: C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O
+[16:05:17] SMILES Parse Error: check for mistakes around position 64:
+[16:05:17] 5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O' for input: 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'
+[16:05:17] SMILES Parse Error: syntax error while parsing: OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+[16:05:17] SMILES Parse Error: check for mistakes around position 37:
+[16:05:17] cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(c
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO' for input: 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'
+[16:05:17] SMILES Parse Error: syntax error while parsing: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:05:17] SMILES Parse Error: check for mistakes around position 45:
+[16:05:17] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:05:17] ~~~~~~~~~~~~~~~~~~~~^
+[16:05:17] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4' for input: 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'
+100%|██████████| 118/118 [00:00<00:00, 318.09it/s]
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+[rank: 0] Seed set to 2
+  0%|          | 0/118 [00:00<?, ?it/s][16:08:09] SMILES Parse Error: syntax error while parsing: Antibody
+[16:08:09] SMILES Parse Error: check for mistakes around position 1:
+[16:08:09] Antibody
+[16:08:09] ^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'Antibody' for input: 'Antibody'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4' for input: 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 74:
+[16:08:09] nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O' for input: 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F
+[16:08:09] SMILES Parse Error: check for mistakes around position 67:
+[16:08:09] c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F' for input: 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F'
+[16:08:09] SMILES Parse Error: syntax error while parsing: C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] 5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O' for input: 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+[16:08:09] SMILES Parse Error: check for mistakes around position 37:
+[16:08:09] cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO' for input: 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'
+ 56%|█████▌    | 66/118 [00:00<00:00, 646.80it/s][16:08:09] SMILES Parse Error: syntax error while parsing: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:08:09] SMILES Parse Error: check for mistakes around position 45:
+[16:08:09] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4' for input: 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'
+100%|██████████| 118/118 [00:00<00:00, 710.27it/s]
+  0%|          | 0/118 [00:00<?, ?it/s]  0%|          | 0/118 [00:00<?, ?it/s][16:08:09] [16:08:09] SMILES Parse Error: SMILES Parse Error: syntax errorsyntax error while parsing:  while parsing: AntibodyAntibody
+
+[16:08:09] [16:08:09] SMILES Parse Error: check for mistakes around position SMILES Parse Error: check for mistakes around position 11::
+
+[16:08:09] [16:08:09] AntibodyAntibody
+
+[16:08:09] [16:08:09] ^^
+
+[16:08:09] [16:08:09] SMILESSMILES Parse Error:  Parse Error: Failed parsing SMILES 'Antibody'Failed parsing SMILES 'Antibody' for input: ' for input: 'AntibodyAntibody''
+
+[16:08:09] [16:08:09] SMILES Parse Error: SMILES Parse Error: syntax errorsyntax error while parsing:  while parsing: CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4
+
+[16:08:09] [16:08:09] SMILES Parse Error: check for mistakes around position SMILES Parse Error: check for mistakes around position 6464::
+
+[16:08:09] [16:08:09] CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOcCC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc
+
+[16:08:09] [16:08:09] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+
+[16:08:09] [16:08:09] SMILESSMILES Parse Error:  Parse Error: Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4'Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4' for input: ' for input: 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4''
+
+  0%|          | 0/118 [00:00<?, ?it/s][16:08:09] SMILES Parse Error: syntax error while parsing: Antibody
+[16:08:09] SMILES Parse Error: check for mistakes around position 1:
+[16:08:09] Antibody
+[16:08:09] ^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'Antibody' for input: 'Antibody'
+  0%|          | 0/118 [00:00<?, ?it/s][16:08:09] SMILES Parse Error: syntax error while parsing: Antibody
+[16:08:09] SMILES Parse Error: check for mistakes around position 1:
+[16:08:09] Antibody
+[16:08:09] ^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'Antibody' for input: 'Antibody'
+[16:08:09] SMILES Parse Error: syntax error while parsing: [16:08:09] CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)OSMILES Parse Error: 
+syntax error[16:08:09]  while parsing: SMILES Parse Error: check for mistakes around position CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O74
+:[16:08:09] 
+SMILES Parse Error: check for mistakes around position [16:08:09] 74nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O:
+
+[16:08:09] [16:08:09] ~~~~~~~~~~~~~~~~~~~~nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O^
+
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^[16:08:09] 
+SMILES Parse Error: Failed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'[16:08:09]  for input: 'SMILESCN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O Parse Error: 'Failed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+ for input: 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] [16:08:09] SMILES Parse Error: CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOcsyntax error[16:08:09] 
+ while parsing: SMILES Parse Error: [16:08:09] CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)Fsyntax error~~~~~~~~~~~~~~~~~~~~
+ while parsing: ^[16:08:09] CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F
+SMILES Parse Error: check for mistakes around position 
+67[16:08:09] [16:08:09] :SMILES Parse Error: check for mistakes around position SMILES
+67 Parse Error: [16:08:09] :Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4'c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c
+ for input: '
+[16:08:09] CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4[16:08:09] c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c'~~~~~~~~~~~~~~~~~~~~[16:08:09] 
+
+^SMILES Parse Error: [16:08:09] 
+syntax error~~~~~~~~~~~~~~~~~~~~ while parsing: ^[16:08:09] CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4
+SMILES
+ Parse Error: [16:08:09] [16:08:09] Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F'SMILES Parse Error: check for mistakes around position SMILES for input: '64 Parse Error: CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F:Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F''
+ for input: '
+[16:08:09] CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)FCC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc'
+
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4' for input: 'CC(=O)N1CCN(CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(CC4)nnc5C(F)(F)F)CC1;CC(=O)N1CCN(CC1)CCOc2ccc(cc2)C3CCN(CC3)C4=Nn5c(nnc5C(F)(F)F)CC4'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 74:
+[16:08:09] nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O' for input: 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 74:
+[16:08:09] nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)O
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: [16:08:09] syntax errorSMILES while parsing:  Parse Error: CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)FFailed parsing SMILES 'CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)O'
+ for input: '[16:08:09] CN(C)CC#Cc1ccc(OCCCc2sc(nc2C(=O)O)N3CCc4cccc(C(=O)Nc5nc6ccccc6s5)c4C3)cc1;CN(C)CC#Cc1ccc(cc1)OCCCc2c(nc(s2)N3CCc4cccc(c4C3)C(=O)Nc5nc6ccccc6s5)C(=O)OSMILES Parse Error: check for mistakes around position '67
+:
+[16:08:09] c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F' for input: 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F
+[16:08:09] SMILES Parse Error: check for mistakes around position 67:
+[16:08:09] c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F' for input: 'CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2c[nH]c3ncc(cc23)c4cccc(c4)C(=O)N)c1F;CCCS(=O)(=O)Nc1ccc(c(c1F)C(=O)c2c[nH]c3c2cc(cn3)c4cccc(c4)C(=O)N)F'
+ 46%|████▌     | 54/118 [00:00<00:00, 539.01it/s] 46%|████▌     | 54/118 [00:00<00:00, 533.70it/s][16:08:09] SMILES Parse Error: syntax error while parsing: C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] [16:08:09] 5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2SMILES Parse Error: 
+syntax error[16:08:09]  while parsing: ~~~~~~~~~~~~~~~~~~~~C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O^
+
+[16:08:09] SMILES Parse Error: check for mistakes around position 64[16:08:09] :SMILES
+ Parse Error: [16:08:09] Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2 for input: '
+C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O[16:08:09] '~~~~~~~~~~~~~~~~~~~~
+^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O' for input: 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+[16:08:09] SMILES Parse Error: check for mistakes around position 37:
+[16:08:09] cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(c[16:08:09] 
+SMILES Parse Error: [16:08:09] syntax error~~~~~~~~~~~~~~~~~~~~ while parsing: ^OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+
+[16:08:09] SMILES Parse Error: check for mistakes around position [16:08:09] 37SMILES: Parse Error: 
+Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'[16:08:09]  for input: 'cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(cOCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+'[16:08:09] 
+~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO' for input: 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'
+[16:08:09] SMILES Parse Error: syntax error while parsing: C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] 5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O' for input: 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'
+ 51%|█████     | 60/118 [00:00<00:00, 590.73it/s] 48%|████▊     | 57/118 [00:00<00:00, 569.45it/s][16:08:09] SMILES Parse Error: syntax error while parsing: C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O
+[16:08:09] SMILES Parse Error: check for mistakes around position 64:
+[16:08:09] 5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O' for input: 'C[C@@]1(O)C[C@@H](C1)c2nc(c3ccc4ccc(nc4c3)c5ccccc5)c6c(N)nccn26;C[C@]1(C[C@@H](C1)c2n3c(c(ncc3)N)c(n2)c4cc5nc(ccc5cc4)c6ccccc6)O'
+[16:08:09] SMILES Parse Error: syntax error while parsing: OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+[16:08:09] SMILES Parse Error: check for mistakes around position 37:
+[16:08:09] cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO' for input: 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'
+[16:08:09] SMILES Parse Error: syntax error while parsing: OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO
+[16:08:09] SMILES Parse Error: check for mistakes around position 37:
+[16:08:09] cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(c
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO' for input: 'OCCONC(=O)c1ccc2cncn2c1Nc3ccc(I)cc3F;c1cc(c(cc1I)F)Nc2c(ccc3n2cnc3)C(=O)NOCCO'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:08:09] SMILES Parse Error: check for mistakes around position 45:
+[16:08:09] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'[16:08:09]  for input: 'SMILES Parse Error: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4syntax error' while parsing: 
+CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:08:09] SMILES Parse Error: check for mistakes around position 45:
+[16:08:09] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4' for input: 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:08:09] SMILES Parse Error: check for mistakes around position 45:
+[16:08:09] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4' for input: 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'
+[16:08:09] SMILES Parse Error: syntax error while parsing: CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4
+[16:08:09] SMILES Parse Error: check for mistakes around position 45:
+[16:08:09] n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)
+[16:08:09] ~~~~~~~~~~~~~~~~~~~~^
+[16:08:09] SMILES Parse Error: Failed parsing SMILES 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4' for input: 'CS(=O)(=O)c1ccc(Nc2cncc(n2)c3cnc4ccccn34)cc1;CS(=O)(=O)c1ccc(cc1)Nc2cncc(n2)c3cnc4n3cccc4'
+100%|██████████| 118/118 [00:00<00:00, 605.15it/s]
+100%|██████████| 118/118 [00:00<00:00, 597.00it/s]
+100%|██████████| 118/118 [00:00<00:00, 637.11it/s]
+100%|██████████| 118/118 [00:00<00:00, 620.82it/s]
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
+/scratch/phys/sin/gonzalm9/tabular_molec/cat_drug_synergy/./src/model/evaluation.py:85: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho_i, _ = pearsonr(y_pred[mask], y_true[mask])
