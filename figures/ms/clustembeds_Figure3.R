@@ -336,6 +336,3 @@ ggplot(all_clusters_data, aes(x = Cluster, y = Score_z_exp)) +
         axis.text.y=element_text(size=12, face = 'bold'),
         axis.line = element_line(color = 'black', size = 1),
         legend.position="none")
-
-
-
